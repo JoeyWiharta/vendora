@@ -81,6 +81,8 @@
   --sidebar-accent-foreground: oklch(0.3 0.1 275);
   --sidebar-border: oklch(0.89 0.035 280);
   --sidebar-ring: oklch(0.52 0.19 277);
+  --autofill-bg: oklch(0.995 0.004 280);
+
 }
 
 .dark {
@@ -115,6 +117,8 @@
   --sidebar-accent-foreground: oklch(0.97 0.01 280);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.62 0.2 277);
+  --autofill-bg: oklch(0.21 0.035 275);
+
 }
 
 @layer base {
@@ -130,3 +134,20 @@
     @apply font-sans;
   }
 }
+
+/* ------- Fix autofill field background ------- */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  box-shadow: 0 0 0 1000px var(--autofill-bg) inset !important;
+  -webkit-text-fill-color: var(--foreground) !important;
+  caret-color: var(--foreground);
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+[data-slot="input-group"]:has(input:-webkit-autofill) {
+  background-color: var(--autofill-bg) !important;
+}
+
+/* ------- Fix autofill field background ------- */

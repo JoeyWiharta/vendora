@@ -1,10 +1,15 @@
-"use cache"
+"use client";
+import { useSyncExternalStore } from "react";
 
-const Copyright = async () => {
+const subscribe = () => () => { };
+
+const Copyright = () => {
+    const year = useSyncExternalStore(subscribe, () => new Date().getFullYear(), () => null);
     return (
         <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Vendora. All rights reserved.
+            © {year} Vendora. All rights reserved.
         </p>
     );
-}
-export default Copyright
+};
+
+export default Copyright;
