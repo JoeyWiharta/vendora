@@ -1,10 +1,10 @@
-import {LoginForm}  from "../_components/login-form";
+import LoginForm from "../_components/LoginForm";
 
-export default function LoginPage() {
+const LoginPage = () => {
     return (
         <>
-            <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tight">Welcome back</h1>
+            <div className="space-y-1">
+                <h1 className="text-2xl font-semibold tracking-tight">Welcome back</h1>
                 <p className="text-muted-foreground">
                     Log in to your account to continue your shopping journey.
                 </p>
@@ -13,3 +13,4 @@ export default function LoginPage() {
         </>
     );
 }
+export default LoginPage;

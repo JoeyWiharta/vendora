@@ -6,29 +6,15 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-    Field,
-    FieldDescription,
-    FieldError,
-    FieldGroup,
-    FieldLabel,
-    FieldSet,
-} from "@/components/ui/field";
-import {
-    InputGroup,
-    InputGroupAddon,
-    InputGroupButton,
-    InputGroupInput,
-} from "@/components/ui/input-group";
+import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/components/ui/input-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { loginSchema } from "../_schemas/loginSchema";
 import { useLogin } from "../_hooks/useLogin";
 import type { LoginFormValues } from "../_types/loginTypes";
-import { useRedirectIfLoggedIn } from "@/hooks/use-role-guard";
 import { Separator } from "@/components/ui/separator";
 
-export function LoginForm() {
-    const { ready } = useRedirectIfLoggedIn();
+const LoginForm = () => {
 
     const [showPassword, setShowPassword] = useState(false);
     const [rememberMe, setRememberMe] = useState(true);
@@ -47,7 +33,6 @@ export function LoginForm() {
         doLogin({ email: values.email, password: values.password, rememberMe });
     });
 
-    if (!ready) return null;
 
 
     return (
@@ -128,7 +113,7 @@ export function LoginForm() {
                     </Button>
 
                     <Separator />
-                    
+
                     <FieldDescription className="text-center">
                         Don&apos;t have an account?{" "}
                         <Link href="/register" className="font-medium text-primary">
@@ -140,3 +125,4 @@ export function LoginForm() {
         </form>
     );
 }
+export default LoginForm;
