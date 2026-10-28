@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
@@ -17,7 +17,7 @@ import { Spinner } from "@/components/ui/spinner";
 const LoginForm = () => {
     const [showPassword, setShowPassword] = useState(false);
     const { mutate: doLogin, isPending } = useLogin();
-    const { register, control, handleSubmit, formState: { errors } } = useForm<LoginFormValues>({
+    const { register, control, handleSubmit, formState: { errors }, reset } = useForm<LoginFormValues>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
             email: "",
@@ -25,6 +25,11 @@ const LoginForm = () => {
             rememberMe: true,
         },
     });
+
+    useEffect(() => {
+        setShowPassword(false)
+        reset();
+    }, [reset]);
 
     const onSubmit = handleSubmit((values) => {
         doLogin(values)
@@ -70,6 +75,7 @@ const LoginForm = () => {
                             />
                             <InputGroupAddon align="inline-end">
                                 <InputGroupButton
+                                    type="button"
                                     size="icon-xs"
                                     tabIndex={-1}
                                     aria-label={showPassword ? "Hide password" : "Show password"}

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
@@ -20,7 +20,7 @@ const RegisterForm = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const { mutate: doRegister, isPending } = useRegister();
 
-    const { register, control, handleSubmit, formState: { errors } } = useForm<RegisterFormValues>({
+    const { register, control, handleSubmit, formState: { errors }, reset } = useForm<RegisterFormValues>({
         resolver: zodResolver(registerSchema),
         defaultValues: {
             role: "customer",
@@ -29,6 +29,12 @@ const RegisterForm = () => {
             confirmPassword: "",
         },
     });
+
+    useEffect(() => {
+        reset();
+        setShowPassword(false)
+        setShowConfirmPassword(false)
+    }, [reset]);
 
     const onSubmit = handleSubmit((values) => {
         doRegister({
@@ -42,6 +48,7 @@ const RegisterForm = () => {
         <form onSubmit={onSubmit} noValidate className="w-full min-w-0">
             <FieldSet className="flex min-w-0 flex-col gap-6">
                 <FieldGroup className="flex min-w-0 flex-col gap-4">
+
                     <Field data-invalid={!!errors.role}>
                         <Controller
                             name="role"
@@ -51,27 +58,37 @@ const RegisterForm = () => {
                                     value={field.value}
                                     onValueChange={field.onChange}
                                     disabled={isPending}
-                                    className="grid grid-cols-2 gap-3"
+                                    className="grid grid-cols-1 lg:grid-cols-2 gap-3"
                                 >
+
                                     {ROLE_OPTIONS.map((option) => (
                                         <FieldLabel
                                             key={option.value}
                                             htmlFor={`role-${option.value}`}
+                                            className="cursor-pointer"
                                         >
-                                            <Field orientation="horizontal">
-                                                <FieldContent>
-                                                    <FieldTitle>{option.title}</FieldTitle>
-                                                    <FieldDescription>
-                                                        {option.description}
-                                                    </FieldDescription>
+                                            <Field
+                                                orientation="horizontal"
+                                                className="h-full min-w-0 items-center gap-3 rounded-lg border p-3"
+                                            >
+                                                <div className="flex shrink-0 items-center justify-center self-stretch">
+                                                    <option.icon className="size-6 text-muted-foreground" />
+                                                </div>
+
+                                                <FieldContent className="min-w-0 flex-1 gap-1">
+                                                    <FieldTitle className="wrap-break-word">{option.title}</FieldTitle>
+                                                    <FieldDescription>{option.description}</FieldDescription>
                                                 </FieldContent>
+
                                                 <RadioGroupItem
                                                     value={option.value}
                                                     id={`role-${option.value}`}
+                                                    className="shrink-0"
                                                 />
                                             </Field>
                                         </FieldLabel>
                                     ))}
+
                                 </RadioGroup>
                             )}
                         />
