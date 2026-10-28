@@ -2,8 +2,8 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/store/auth-store";
-import { dashboardPath } from "@/app/(authentication)/_services/authService";
+import { useAuthStore } from "@/store/authStore";
+import { authPath } from "@/app/(authentication)/_utils/authPath";
 import type { UserRole } from "@/app/(authentication)/_types/authTypes";
 
 // Untuk halaman customer / seller
@@ -19,7 +19,7 @@ export function useRoleGuard(required: UserRole) {
     useEffect(() => {
         if (!hydrated) return;
         if (!user) router.replace("/login");
-        else if (user.role !== required) router.replace(dashboardPath(user.role));
+        else if (user.role !== required) router.replace(authPath(user.role));
     }, [hydrated, user, required, router]);
 }
 
@@ -34,7 +34,7 @@ export function useRedirectIfLoggedIn() {
     }, []);
 
     useEffect(() => {
-        if (hydrated && user) router.replace(dashboardPath(user.role));
+        if (hydrated && user) router.replace(authPath(user.role));
     }, [hydrated, user, router]);
 
     return { ready: hydrated && !user };

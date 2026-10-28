@@ -1,15 +1,20 @@
-import { RegisterForm } from "../_components/register-form";
+import { CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import RegisterForm from "../_components/RegisterForm";
 
-export default function RegisterPage() {
+const RegisterPage = () => {
     return (
         <>
-            <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tight">Create your account</h1>
-                <p className="text-muted-foreground">
-                    Sign up as a customer or a seller.
-                </p>
-            </div>
-            <RegisterForm />
+            <CardHeader>
+                <CardTitle className="text-2xl">Create your account</CardTitle>
+                <CardDescription>
+                    Join Vendora to discover products or start selling.
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                <RegisterForm />
+            </CardContent>
         </>
     );
-}
+};
+
+export default RegisterPage;

@@ -1,7 +1,7 @@
 "use client";
 
 import { LogoutButton } from "@/app/(authentication)/_components/logout-button";
-import { useRoleGuard } from "@/hooks/use-role-guard";
+import { useRoleGuard } from "@/hooks/useRoleGuard";
 
 export default function CustomerDashboardPage() {
 

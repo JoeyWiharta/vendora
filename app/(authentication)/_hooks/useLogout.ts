@@ -4,8 +4,10 @@ import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { queryClient } from "@/query/queryClient";
-import { useAuthStore } from "@/store/auth-store";
-import { authErrorMessage, logoutUser } from "../_services/authService";
+import { useAuthStore } from "@/store/authStore";
+import { 
+    // authErrorMessage, 
+    logoutUser } from "../_services/authService";
 
 export function useLogout() {
     const router = useRouter();
@@ -21,7 +23,7 @@ export function useLogout() {
             router.replace("/login");
         },
         onError: (error) => {
-            toast.error(authErrorMessage(error));
+            // toast.error(authErrorMessage(error));
         },
     });
 }

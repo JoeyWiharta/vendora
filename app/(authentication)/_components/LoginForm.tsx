@@ -2,38 +2,33 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
+import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel, FieldSet, FieldSeparator } from "@/components/ui/field";
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/components/ui/input-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { loginSchema } from "../_schemas/loginSchema";
 import { useLogin } from "../_hooks/useLogin";
 import type { LoginFormValues } from "../_types/loginTypes";
-import { Separator } from "@/components/ui/separator";
+import { Spinner } from "@/components/ui/spinner";
 
 const LoginForm = () => {
-
     const [showPassword, setShowPassword] = useState(false);
-    const [rememberMe, setRememberMe] = useState(true);
     const { mutate: doLogin, isPending } = useLogin();
-
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<LoginFormValues>({
+    const { register, control, handleSubmit, formState: { errors } } = useForm<LoginFormValues>({
         resolver: zodResolver(loginSchema),
-        defaultValues: { email: "", password: "" },
+        defaultValues: {
+            email: "",
+            password: "",
+            rememberMe: true,
+        },
     });
 
     const onSubmit = handleSubmit((values) => {
-        doLogin({ email: values.email, password: values.password, rememberMe });
+        doLogin(values)
     });
-
-
 
     return (
         <form onSubmit={onSubmit} noValidate className="w-full min-w-0">
@@ -41,7 +36,7 @@ const LoginForm = () => {
                 <FieldGroup className="flex min-w-0 flex-col gap-4">
                     <Field data-invalid={!!errors.email}>
                         <FieldLabel htmlFor="email">Email</FieldLabel>
-                        <InputGroup className="h-12 min-w-0 rounded-lg px-2">
+                        <InputGroup className="px-2">
                             <InputGroupAddon>
                                 <Mail />
                             </InputGroupAddon>
@@ -60,7 +55,7 @@ const LoginForm = () => {
 
                     <Field data-invalid={!!errors.password}>
                         <FieldLabel htmlFor="password">Password</FieldLabel>
-                        <InputGroup className="h-12 min-w-0 rounded-lg px-2">
+                        <InputGroup className="px-2">
                             <InputGroupAddon>
                                 <Lock />
                             </InputGroupAddon>
@@ -84,17 +79,21 @@ const LoginForm = () => {
                                 </InputGroupButton>
                             </InputGroupAddon>
                         </InputGroup>
-                        {errors.password && (
-                            <FieldError>{errors.password.message}</FieldError>
-                        )}
+                        {errors.password && (<FieldError>{errors.password.message}</FieldError>)}
                     </Field>
 
                     <Field orientation="horizontal" className="items-center gap-2">
-                        <Checkbox
-                            id="rememberMe"
-                            checked={rememberMe}
-                            onCheckedChange={(checked) => setRememberMe(checked === true)}
-                            disabled={isPending}
+                        <Controller
+                            name="rememberMe"
+                            control={control}
+                            render={({ field }) => (
+                                <Checkbox
+                                    id="rememberMe"
+                                    checked={field.value}
+                                    onCheckedChange={(checked) => field.onChange(checked === true)}
+                                    disabled={isPending}
+                                />
+                            )}
                         />
                         <FieldLabel htmlFor="rememberMe" className="font-normal text-muted-foreground">
                             Remember me
@@ -102,21 +101,18 @@ const LoginForm = () => {
                     </Field>
                 </FieldGroup>
 
-                <Field>
-                    <Button
-                        type="submit"
-                        size="lg"
-                        className="h-12 w-full rounded-lg"
-                        disabled={isPending}
+                <Field className="gap-4">
+                    <Button type="submit" size="lg" disabled={isPending}
                     >
-                        {isPending ? "Loading..." : "Log in"}
+                        {isPending && <Spinner />}
+                        {isPending ? "Loading..." : "Login"}
                     </Button>
 
-                    <Separator />
+                    <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">Or</FieldSeparator>
 
                     <FieldDescription className="text-center">
-                        Don&apos;t have an account?{" "}
-                        <Link href="/register" className="font-medium text-primary">
+                        Don't have an account?
+                        <Link href="/register" className="font-medium text-primary ml-1">
                             Sign up
                         </Link>
                     </FieldDescription>

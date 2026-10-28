@@ -1,15 +1,18 @@
+import { CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import LoginForm from "../_components/LoginForm";
 
 const LoginPage = () => {
     return (
         <>
-            <div className="space-y-1">
-                <h1 className="text-2xl font-semibold tracking-tight">Welcome back</h1>
-                <p className="text-muted-foreground">
-                    Log in to your account to continue your shopping journey.
-                </p>
-            </div>
-            <LoginForm />
+            <CardHeader>
+                <CardTitle className="text-2xl">Welcome back</CardTitle>
+                <CardDescription>
+                    Log in to your account to continue shopping.
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                <LoginForm />
+            </CardContent>
         </>
     );
 }

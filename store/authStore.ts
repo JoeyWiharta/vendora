@@ -1,21 +1,19 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import type {
-    AuthenticatedSession,
-    AuthenticatedUser,
-} from "@/app/(authentication)/_types/authTypes";
+import type { AuthSession, UserData } from "@/app/(authentication)/_types/authTypes";
 
 interface AuthState {
-    user: AuthenticatedUser | null;
+    user: UserData | null;
     token: string | null;
     remember: boolean;
     hydrated: boolean;
-    setAuth: (session: AuthenticatedSession, remember: boolean) => void;
+    setAuth: (
+        session: AuthSession,
+        remember: boolean
+    ) => void;
     clearAuth: () => void;
 }
 
-// remember = true  -> localStorage (tetap login setelah browser ditutup)
-// remember = false -> sessionStorage (hilang saat tab ditutup)
 const authStorage = createJSONStorage(() => ({
     getItem: (name) => localStorage.getItem(name) ?? sessionStorage.getItem(name),
     setItem: (name, value) => {

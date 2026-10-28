@@ -3,27 +3,29 @@
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { useAuthStore } from "@/store/auth-store";
-import {
-    authErrorMessage,
-    dashboardPath,
-    registerUser,
-} from "../_services/authService";
+import { useAuthStore } from "@/store/authStore";
+import { registerUser } from "../_services/authService";
 import type { RegisterPayload } from "../_types/registerTypes";
+import { authErrorMessage } from "../_utils/authErrorMessage";
+import { authPath } from "../_utils/authPath";
 
-export function useRegister() {
+export const useRegister = () => {
     const router = useRouter();
     const setAuth = useAuthStore((s) => s.setAuth);
 
     return useMutation({
-        mutationFn: (payload: RegisterPayload) => registerUser(payload),
+        mutationFn: (payload: RegisterPayload) => {
+            const promise = registerUser(payload);
+            toast.promise(promise, {
+                loading: "Creating account...",
+                success: "Account created successfully",
+                error: (error) => authErrorMessage(error),
+            });
+            return promise
+        },
         onSuccess: (session) => {
             setAuth(session, true);
-            toast.success("Account created successfully");
-            router.replace(dashboardPath(session.user.role));
-        },
-        onError: (error) => {
-            toast.error(authErrorMessage(error));
+            router.replace(authPath(session.user.role));
         },
     });
 }

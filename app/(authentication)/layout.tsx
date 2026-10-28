@@ -1,8 +1,8 @@
-"use client";
-
 import Image from "next/image";
 import VendoraLogo from "@/app/assets/logo/vendora-logo.svg";
 import AuthIllustration from "./_components/AuthIllustration";
+import { Card } from "@/components/ui/card";
+import ThemeToggle from "@/components/common/ThemeToggle";
 
 interface AuthLayoutProps {
     children: React.ReactNode;
@@ -10,7 +10,10 @@ interface AuthLayoutProps {
 
 const AuthLayout = ({ children }: AuthLayoutProps) => {
     return (
-        <main className="flex min-h-screen items-center justify-center bg-background">
+        <main className="relative flex min-h-screen items-center justify-center bg-background">
+            <div className="absolute right-4 top-4">
+                <ThemeToggle />
+            </div>
             <div className="grid w-full max-w-screen-2xl md:min-h-[min(100vh,56rem)] md:grid-cols-2">
                 <AuthIllustration />
                 <section className="flex items-center justify-center p-4 sm:p-6 lg:p-10">
@@ -20,9 +23,9 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
                             <span className="text-2xl font-bold tracking-tight">Vendora</span>
                         </div>
 
-                        <div className="space-y-8 rounded-xl bg-card p-6 shadow-xl shadow-primary/5 ring-1 ring-border sm:p-8 lg:p-10">
+                        <Card className="shadow-xl shadow-primary/5">
                             {children}
-                        </div>
+                        </Card>
                     </div>
                 </section>
             </div>

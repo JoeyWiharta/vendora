@@ -12,11 +12,9 @@ const AuthIllustration = () => {
                         <Image
                             src={VendoraLogo}
                             alt="Vendora logo"
-                            width={40}
-                            height={40}
                             priority
                             draggable={false}
-                            className="size-8 lg:size-10"
+                            className="size-8 lg:size-10 aspect-square"
                         />
                         <span className="text-2xl font-bold tracking-tight lg:text-3xl">Vendora</span>
                     </div>
