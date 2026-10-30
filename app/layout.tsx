@@ -5,6 +5,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { QueryProvider } from "@/query/queryProvider";
 import { Toaster } from "@/components/ui/sonner";
+import AuthListener from "./(authentication)/_components/AuthListener";
 
 const jakartaFont = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -22,7 +23,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <QueryProvider>{children}</QueryProvider>
+          <QueryProvider>
+            <AuthListener />
+            {children}
+          </QueryProvider>
           <Toaster position="top-right" duration={4000} visibleToasts={1} />
         </ThemeProvider>
       </body>

@@ -11,7 +11,7 @@ import { authPath } from "../_utils/authPath";
 
 export const useRegister = () => {
     const router = useRouter();
-    const setAuth = useAuthStore((s) => s.setAuth);
+    const setUser = useAuthStore((s) => s.setUser);
 
     return useMutation({
         mutationFn: (payload: RegisterPayload) => {
@@ -21,11 +21,11 @@ export const useRegister = () => {
                 success: "Account created successfully",
                 error: (error) => authErrorMessage(error),
             });
-            return promise
+            return promise;
         },
-        onSuccess: (session) => {
-            setAuth(session, true);
-            router.replace(authPath(session.user.role));
+        onSuccess: (user) => {
+            setUser(user);
+            router.replace(authPath(user.role));
         },
     });
-}
+};

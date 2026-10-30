@@ -11,11 +11,11 @@ import { authErrorMessage } from "../_utils/authErrorMessage";
 
 export const useLogin = () => {
     const router = useRouter();
-    const setAuth = useAuthStore((s) => s.setAuth);
+    const setUser = useAuthStore((s) => s.setUser);
 
     return useMutation({
         mutationFn: (payload: LoginPayload) => {
-            const promise = loginUser(payload)
+            const promise = loginUser(payload);
             toast.promise(promise, {
                 loading: "Logging in...",
                 success: "Login successful",
@@ -23,9 +23,9 @@ export const useLogin = () => {
             });
             return promise;
         },
-        onSuccess: (data, variables) => {
-            setAuth(data, variables.rememberMe);
-            router.replace(authPath(data.user.role));
+        onSuccess: (user) => {
+            setUser(user);
+            router.replace(authPath(user.role));
         },
     });
-}
+};

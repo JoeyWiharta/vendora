@@ -9,7 +9,7 @@ import { logoutUser } from "../_services/authService";
 
 export const useLogout = () => {
     const router = useRouter();
-    const clearAuth = useAuthStore((s) => s.clearAuth);
+    const setUser = useAuthStore((s) => s.setUser);
 
     return useMutation({
         mutationFn: () => {
@@ -22,8 +22,7 @@ export const useLogout = () => {
             return promise;
         },
         onSettled: () => {
-            clearAuth();
-            useAuthStore.persist.clearStorage();
+            setUser(null);
             queryClient.clear();
             router.replace("/login");
         },

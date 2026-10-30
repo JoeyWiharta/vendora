@@ -21,7 +21,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
                     <section className="flex items-center justify-center p-4 sm:p-6 lg:p-10">
                         <div className="w-full max-w-md space-y-6 lg:space-y-8">
                             <div className="flex items-center gap-2.5 md:hidden">
-                                <Image src={VendoraLogo} alt="Vendora logo" width={40} height={40} />
+                                <Image src={VendoraLogo} alt="Vendora logo" width={40} height={40} priority />
                                 <span className="text-2xl font-bold tracking-tight">Vendora</span>
                             </div>
                             <Card className="shadow-xl shadow-primary/10">

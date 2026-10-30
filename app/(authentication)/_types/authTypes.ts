@@ -5,8 +5,3 @@ export interface UserData {
     email: string;
     role: UserRole;
 }
-
-export interface AuthSession {
-    user: UserData;
-    idToken: string;
-}

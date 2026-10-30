@@ -1,7 +1,6 @@
-import { redirect } from "next/navigation"
+// app/page.tsx  (ganti seluruh isinya)
+import HomeRedirect from "../components/common/HomeRedirect";
 
-const Home = () => {
-  redirect("/login")
+export default function Home() {
+  return <HomeRedirect />;
 }
-
-export default Home
