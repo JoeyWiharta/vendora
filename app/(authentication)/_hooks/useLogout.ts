@@ -5,25 +5,27 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { queryClient } from "@/query/queryClient";
 import { useAuthStore } from "@/store/authStore";
-import { 
-    // authErrorMessage, 
-    logoutUser } from "../_services/authService";
+import { logoutUser } from "../_services/authService";
 
-export function useLogout() {
+export const useLogout = () => {
     const router = useRouter();
     const clearAuth = useAuthStore((s) => s.clearAuth);
 
     return useMutation({
-        mutationFn: logoutUser,
-        onSuccess: () => {
+        mutationFn: () => {
+            const promise = logoutUser();
+            toast.promise(promise, {
+                loading: "Logging out...",
+                success: "Logged out",
+                error: "Logged out",
+            });
+            return promise;
+        },
+        onSettled: () => {
             clearAuth();
-            useAuthStore.persist.clearStorage(); // hapus key dari localStorage dan sessionStorage
-            queryClient.clear(); // buang cache data user sebelumnya
-            toast.success("Logged out");
+            useAuthStore.persist.clearStorage();
+            queryClient.clear();
             router.replace("/login");
         },
-        onError: (error) => {
-            // toast.error(authErrorMessage(error));
-        },
     });
-}
+};

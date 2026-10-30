@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import VendoraLogo from "@/app/assets/logo/vendora-logo.svg";
+import VendoraLogo from "@/assets/logo/vendora-logo.svg";
 import CurrentYear from "@/components/common/CurrentYear";
 
 const AuthIllustration = () => {

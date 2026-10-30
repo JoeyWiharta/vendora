@@ -21,6 +21,8 @@ export function useRoleGuard(required: UserRole) {
         if (!user) router.replace("/login");
         else if (user.role !== required) router.replace(authPath(user.role));
     }, [hydrated, user, required, router]);
+
+    return { ready: hydrated && user?.role === required };
 }
 
 // Untuk /login dan /register

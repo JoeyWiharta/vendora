@@ -1,11 +1,4 @@
-import {
-    createUserWithEmailAndPassword,
-    deleteUser,
-    signInWithEmailAndPassword,
-    signOut, browserLocalPersistence,
-    browserSessionPersistence,
-    setPersistence,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, deleteUser, signInWithEmailAndPassword, signOut, browserLocalPersistence, browserSessionPersistence, setPersistence } from "firebase/auth";
 import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import { authFirebase, dbFirebase } from "@/lib/firebase";
 import type { AuthSession, UserRole } from "../_types/authTypes";
@@ -20,14 +13,14 @@ export const loginUser = async (values: LoginPayload): Promise<AuthSession> => {
         const userSnapshot = await getDoc(doc(dbFirebase, "master-users", firebaseUser.uid))
 
         if (!userSnapshot.exists()) {
-            throw new Error("User account not found");
+            throw new Error("Invalid email or password");
         }
 
         const userData = userSnapshot.data();
         const userRole = userData.role;
 
         if (userData.uid !== firebaseUser.uid || userData.email !== firebaseUser.email || (userRole !== "customer" && userRole !== "seller")) {
-            throw new Error("User account data is invalid");
+            throw new Error("Your account data is invalid. Please contact support");
         }
 
         return {

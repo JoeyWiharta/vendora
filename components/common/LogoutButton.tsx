@@ -2,7 +2,7 @@
 
 import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useLogout } from "../_hooks/useLogout";
+import { useLogout } from "@/app/(authentication)/_hooks/useLogout";
 
 export function LogoutButton() {
     const { mutate: doLogout, isPending } = useLogout();
@@ -14,3 +14,4 @@ export function LogoutButton() {
         </Button>
     );
 }
+

@@ -6,7 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Field, FieldContent, FieldDescription, FieldError, FieldGroup, FieldLabel, FieldSeparator, FieldSet, FieldTitle } from "@/components/ui/field";
+import { Field, FieldContent, FieldDescription, FieldError, FieldGroup, FieldLabel, FieldLegend, FieldSeparator, FieldSet, FieldTitle } from "@/components/ui/field";
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/components/ui/input-group";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Spinner } from "@/components/ui/spinner";
@@ -54,42 +54,37 @@ const RegisterForm = () => {
                             name="role"
                             control={control}
                             render={({ field }) => (
-                                <RadioGroup
-                                    value={field.value}
-                                    onValueChange={field.onChange}
-                                    disabled={isPending}
-                                    className="grid grid-cols-1 lg:grid-cols-2 gap-3"
-                                >
-
-                                    {ROLE_OPTIONS.map((option) => (
-                                        <FieldLabel
-                                            key={option.value}
-                                            htmlFor={`role-${option.value}`}
-                                            className="cursor-pointer"
-                                        >
-                                            <Field
-                                                orientation="horizontal"
-                                                className="h-full min-w-0 items-center gap-3 rounded-lg border p-3"
+                                <FieldSet data-invalid={!!errors.role}>
+                                    <FieldLegend className="sr-only">Role</FieldLegend>
+                                    <RadioGroup
+                                        value={field.value}
+                                        onValueChange={field.onChange}
+                                        disabled={isPending}
+                                        aria-invalid={!!errors.role}
+                                        className="grid grid-cols-1 gap-3 lg:grid-cols-2"
+                                    >
+                                        {ROLE_OPTIONS.map(({ value, title, description, icon: Icon }) => (
+                                            <FieldLabel
+                                                key={value}
+                                                htmlFor={`role-${value}`}
+                                                className="w-full cursor-pointer"
                                             >
-                                                <div className="flex shrink-0 items-center justify-center self-stretch">
-                                                    <option.icon className="size-6 text-muted-foreground" />
-                                                </div>
+                                                <Field orientation="horizontal" className="items-center! gap-3 p-3!">
+                                                    <Icon className="size-6 shrink-0 text-muted-foreground" />
 
-                                                <FieldContent className="min-w-0 flex-1 gap-1">
-                                                    <FieldTitle className="wrap-break-word">{option.title}</FieldTitle>
-                                                    <FieldDescription>{option.description}</FieldDescription>
-                                                </FieldContent>
+                                                    <FieldContent className="min-w-0 flex-1 gap-1">
+                                                        <FieldTitle>{title}</FieldTitle>
+                                                        <FieldDescription>{description}</FieldDescription>
+                                                    </FieldContent>
 
-                                                <RadioGroupItem
-                                                    value={option.value}
-                                                    id={`role-${option.value}`}
-                                                    className="shrink-0"
-                                                />
-                                            </Field>
-                                        </FieldLabel>
-                                    ))}
+                                                    <RadioGroupItem value={value} id={`role-${value}`} />
+                                                </Field>
+                                            </FieldLabel>
+                                        ))}
+                                    </RadioGroup>
 
-                                </RadioGroup>
+                                    {errors.role && <FieldError>{errors.role.message}</FieldError>}
+                                </FieldSet>
                             )}
                         />
                         {errors.role && <FieldError>{errors.role.message}</FieldError>}

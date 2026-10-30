@@ -1,3 +1,5 @@
+export const instant = false;
+
 import { CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import LoginForm from "../_components/LoginForm";
 
