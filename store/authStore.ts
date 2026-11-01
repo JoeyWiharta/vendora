@@ -1,13 +1,5 @@
 import { create } from "zustand";
-import type { UserData } from "@/app/(authentication)/_types/authTypes";
-
-interface AuthState {
-    user: UserData | null;
-    loading: boolean;
-    setUser: (
-        user: UserData | null
-    ) => void;
-}
+import type { AuthState } from "@/app/(authentication)/_types/authTypes";
 
 export const useAuthStore = create<AuthState>(
     (set) => ({
@@ -19,4 +11,3 @@ export const useAuthStore = create<AuthState>(
         }),
     }));
 
-export const authFlow = { busy: false };

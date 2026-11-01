@@ -3,8 +3,9 @@
 import { useEffect } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { authFirebase } from "@/lib/firebase";
+import { authFlow } from "@/store/authFlow";
+import { useAuthStore } from "@/store/authStore";
 import { getUserData } from "../_services/authService";
-import { authFlow, useAuthStore } from "@/store/authStore";
 
 const AuthListener = () => {
     const setUser = useAuthStore((s) => s.setUser);
@@ -13,6 +14,7 @@ const AuthListener = () => {
         return onAuthStateChanged(authFirebase, async (firebaseUser) => {
             if (authFlow.busy) return;
             if (!firebaseUser) return setUser(null);
+
             try {
                 setUser(await getUserData(firebaseUser));
             } catch {

@@ -1,6 +1,5 @@
-// app/page.tsx  (ganti seluruh isinya)
-import HomeRedirect from "../components/common/HomeRedirect";
+import HomeRedirect from "@/components/common/HomeRedirect";
 
-export default function Home() {
+export const Home = () => {
   return <HomeRedirect />;
 }

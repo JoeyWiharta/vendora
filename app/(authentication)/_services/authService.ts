@@ -1,18 +1,20 @@
 import { createUserWithEmailAndPassword, deleteUser, signInWithEmailAndPassword, signOut, browserLocalPersistence, browserSessionPersistence, setPersistence, type User } from "firebase/auth";
 import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import { authFirebase, dbFirebase } from "@/lib/firebase";
-import { authFlow } from "@/store/authStore";
+import { authFlow } from "@/store/authFlow";
 import type { UserData, UserRole } from "../_types/authTypes";
 import type { LoginPayload } from "../_types/loginTypes";
 import type { RegisterPayload } from "../_types/registerTypes";
 
 export const getUserData = async (firebaseUser: User): Promise<UserData> => {
     const snapshot = await getDoc(doc(dbFirebase, "master-users", firebaseUser.uid));
+
     if (!snapshot.exists()) {
         throw new Error("Invalid email or password");
     }
     const data = snapshot.data();
     const role = data.role;
+
     if (data.uid !== firebaseUser.uid || data.email !== firebaseUser.email || (role !== "customer" && role !== "seller")) {
         throw new Error("Your account data is invalid. Please contact support");
     }
@@ -29,6 +31,7 @@ export const loginUser = async (values: LoginPayload): Promise<UserData> => {
     try {
         await setPersistence(authFirebase, values.rememberMe ? browserLocalPersistence : browserSessionPersistence);
         const credential = await signInWithEmailAndPassword(authFirebase, values.email, values.password);
+
         try {
             return await getUserData(credential.user);
         } catch (error) {
@@ -61,7 +64,7 @@ export const registerUser = async (values: RegisterPayload): Promise<UserData> =
                 role: values.role,
             };
         } catch (error) {
-            await deleteUser(firebaseUser);
+            await deleteUser(firebaseUser).catch(() => { });
             throw error;
         }
     } finally {

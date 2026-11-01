@@ -1,4 +1,3 @@
-// hooks/useRoleGuard.ts
 "use client";
 
 import { useEffect } from "react";
@@ -7,7 +6,7 @@ import { useAuthStore } from "@/store/authStore";
 import { authPath } from "@/app/(authentication)/_utils/authPath";
 import type { UserRole } from "@/app/(authentication)/_types/authTypes";
 
-export function useRoleGuard(required: UserRole) {
+export const useRoleGuard = (required: UserRole) => {
     const user = useAuthStore((s) => s.user);
     const loading = useAuthStore((s) => s.loading);
     const router = useRouter();
@@ -21,7 +20,7 @@ export function useRoleGuard(required: UserRole) {
     return { ready: !loading && user?.role === required };
 }
 
-export function useRedirectIfLoggedIn() {
+export const useRedirectIfLoggedIn = () => {
     const user = useAuthStore((s) => s.user);
     const loading = useAuthStore((s) => s.loading);
     const router = useRouter();
@@ -33,7 +32,7 @@ export function useRedirectIfLoggedIn() {
     return { ready: !loading && !user };
 }
 
-export function useHomeRedirect() {
+export const useHomeRedirect = () => {
     const user = useAuthStore((s) => s.user);
     const loading = useAuthStore((s) => s.loading);
     const router = useRouter();

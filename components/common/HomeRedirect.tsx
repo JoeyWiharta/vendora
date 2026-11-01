@@ -1,4 +1,3 @@
-// app/_components/HomeRedirect.tsx
 "use client";
 
 import PageLoader from "@/components/common/PageLoader";
