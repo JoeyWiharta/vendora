@@ -1,14 +1,27 @@
 "use client";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import PageLoader from "@/components/common/PageLoader";
-import { useRedirectIfLoggedIn } from "@/hooks/useRoleGuard";
+import { useAuthStore } from "@/store/authStore";
+import { authPath } from "../_utils/authPath";
 
 const AuthGuard = ({ children }: { children: React.ReactNode }) => {
-    const { ready } = useRedirectIfLoggedIn();
+    const user = useAuthStore((s) => s.user);
+    const loading = useAuthStore((s) => s.loading);
+    const router = useRouter();
 
-    if (!ready) return <PageLoader />;
+    useEffect(() => {
+        if (!loading && user) router.replace(authPath(user.role));
+    }, [loading, user, router]);
 
-    return <>{children}</>;
+    const ready = !loading && !user;
+
+    if (ready) {
+        return <>{children}</>;
+    } else {
+        return <PageLoader />;
+    }
 };
 
 export default AuthGuard;

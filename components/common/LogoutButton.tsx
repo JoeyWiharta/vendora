@@ -4,7 +4,7 @@ import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLogout } from "@/app/(authentication)/_hooks/useLogout";
 
-export function LogoutButton() {
+const LogoutButton = () => {
     const { mutate: doLogout, isPending } = useLogout();
 
     return (
@@ -14,4 +14,4 @@ export function LogoutButton() {
         </Button>
     );
 }
-
+export default LogoutButton

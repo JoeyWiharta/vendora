@@ -4,11 +4,7 @@ import ThemeToggle from "./ThemeToggle";
 
 const PageLoader = () => {
     return (
-        <main
-            role="status"
-            aria-live="polite"
-            className="relative flex min-h-screen flex-col items-center justify-center gap-8 bg-background"
-        >
+        <main role="status" aria-live="polite" className="relative flex min-h-screen flex-col items-center justify-center gap-8 bg-background">
             <div className="absolute right-4 top-4">
                 <ThemeToggle />
             </div>

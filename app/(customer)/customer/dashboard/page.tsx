@@ -1,4 +1,4 @@
-import { LogoutButton } from "@/components/common/LogoutButton";
+import LogoutButton from "@/components/common/LogoutButton";
 
 export const instant = false;
 

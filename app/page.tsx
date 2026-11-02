@@ -1,5 +1,7 @@
 import HomeRedirect from "@/components/common/HomeRedirect";
 
-export const Home = () => {
+const Home = () => {
   return <HomeRedirect />;
-}
+};
+
+export default Home;

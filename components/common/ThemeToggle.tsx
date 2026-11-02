@@ -9,14 +9,7 @@ const ThemeToggle = () => {
     const { resolvedTheme, setTheme } = useTheme();
 
     return (
-        <Button
-            variant="ghost"
-            size="icon"
-            aria-label="Toggle theme"
-            onClick={() =>
-                setTheme(resolvedTheme === "dark" ? "light" : "dark")
-            }
-        >
+        <Button variant="ghost" size="icon" aria-label="Toggle theme" onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}>
             <Sun className="dark:hidden" />
             <Moon className="hidden dark:block" />
         </Button>

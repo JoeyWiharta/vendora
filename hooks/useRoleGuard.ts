@@ -20,25 +20,4 @@ export const useRoleGuard = (required: UserRole) => {
     return { ready: !loading && user?.role === required };
 }
 
-export const useRedirectIfLoggedIn = () => {
-    const user = useAuthStore((s) => s.user);
-    const loading = useAuthStore((s) => s.loading);
-    const router = useRouter();
 
-    useEffect(() => {
-        if (!loading && user) router.replace(authPath(user.role));
-    }, [loading, user, router]);
-
-    return { ready: !loading && !user };
-}
-
-export const useHomeRedirect = () => {
-    const user = useAuthStore((s) => s.user);
-    const loading = useAuthStore((s) => s.loading);
-    const router = useRouter();
-
-    useEffect(() => {
-        if (loading) return;
-        router.replace(user ? authPath(user.role) : "/login");
-    }, [loading, user, router]);
-}
