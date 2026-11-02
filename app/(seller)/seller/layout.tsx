@@ -1,9 +1,9 @@
 import { Sidebar, SidebarInset, SidebarProvider, SidebarSeparator } from "@/components/ui/sidebar";
-import SellerGuard from "./_components/guard/SellerGuard";
-import SellerHeader from "./_components/header/SellerHeader";
-import SellerSidebarContent from "./_components/sidebar/SellerSidebarContent";
-import SellerSidebarFooter from "./_components/sidebar/SellerSidebarFooter";
-import SellerSidebarHeader from "./_components/sidebar/SellerSidebarHeader";
+import SellerGuard from "./_components/_layout/SellerGuard";
+import SellerHeader from "./_components/_layout/SellerHeader";
+import SellerSidebarContent from "./_components/_layout/SellerSidebarContent";
+import SellerSidebarFooter from "./_components/_layout/SellerSidebarFooter";
+import SellerSidebarHeader from "./_components/_layout/SellerSidebarHeader";
 
 export default function SellerLayout({ children }: { children: React.ReactNode }) {
     return (
