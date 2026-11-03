@@ -27,35 +27,23 @@ const SellerSidebarContent = () => {
                                     {isActive && (
                                         <span
                                             className={cn(
-                                                "pointer-events-none absolute top-1/2 z-20 h-6 w-1 -translate-y-1/2 rounded-r-md",
-                                                "bg-primary shadow-[2px_0_10px_0_var(--primary)]",
-                                                isCollapsed ? "-left-3" : "-left-2",
-                                            )}
-                                        />
-                                    )}
+                                                "pointer-events-none absolute top-1/2 h-3/4 w-1 -translate-y-1/2 rounded-r-md bg-primary shadow-[2px_0_10px_0_var(--primary)]",
+                                                isCollapsed ? "-left-3" : "-left-2",)}
+                                        />)}
 
                                     <SidebarMenuButton
                                         render={<Link href={data.href} />}
                                         isActive={isActive}
                                         tooltip={data.label}
+                                        onClick={(e) => { if (isActive) e.preventDefault(); }}
                                         className={cn(
                                             "h-9 text-sidebar-foreground",
                                             isActive &&
-                                            "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground data-active:bg-primary data-active:text-primary-foreground",
+                                            "bg-primary text-primary-foreground transition-none hover:bg-primary hover:text-primary-foreground active:bg-primary active:text-primary-foreground data-active:bg-primary data-active:text-primary-foreground",
                                         )}
                                     >
-                                        <data.icon
-                                            className={cn(
-                                                "opacity-50 transition-opacity group-hover/menu-button:opacity-100",
-                                                isActive && "opacity-100",
-                                            )}
-                                        />
-                                        <span
-                                            className={cn(
-                                                "font-medium opacity-50 transition-opacity group-hover/menu-button:opacity-100",
-                                                isActive && "opacity-100",
-                                            )}
-                                        >
+                                        <data.icon className={cn("opacity-50 transition-opacity group-hover/menu-button:opacity-100", isActive && "opacity-100")} />
+                                        <span className={cn("font-medium opacity-50 transition-opacity group-hover/menu-button:opacity-100", isActive && "opacity-100",)}>
                                             {data.label}
                                         </span>
                                     </SidebarMenuButton>

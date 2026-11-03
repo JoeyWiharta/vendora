@@ -5,10 +5,6 @@ import ThemeToggle from "./ThemeToggle";
 const PageLoader = () => {
     return (
         <main role="status" aria-live="polite" className="relative flex min-h-screen flex-col items-center justify-center gap-8 bg-background">
-            <div className="absolute right-4 top-4">
-                <ThemeToggle />
-            </div>
-
             <div className="relative flex size-20 items-center justify-center">
                 <span className="absolute inset-0 animate-ping rounded-full bg-primary/20" />
                 <span className="absolute inset-2 rounded-full bg-primary/10" />

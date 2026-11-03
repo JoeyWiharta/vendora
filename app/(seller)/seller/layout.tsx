@@ -13,7 +13,6 @@ export default function SellerLayout({ children }: { children: React.ReactNode }
                     <SellerSidebarHeader />
                     <SidebarSeparator className="mx-auto w-[90%]!" />
                     <SellerSidebarContent />
-                    <SidebarSeparator className="mx-auto w-[90%]!" />
                     <SellerSidebarFooter />
                 </Sidebar>
 
