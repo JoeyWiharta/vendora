@@ -1,9 +1,11 @@
 import { ClipboardList, History, Package } from "lucide-react";
 
+export const SELLER_HOME_PATH = "/seller/my-products";
+
 const SELLER_SIDEBAR_MENU = [
-    { label: "Product List", href: "/seller/product-list", icon: Package },
-    { label: "Order List", href: "/seller/orders", icon: ClipboardList },
-    { label: "History List", href: "/seller/history", icon: History },
+    { label: "My Products", href: SELLER_HOME_PATH, icon: Package },
+    { label: "Incoming Orders", href: "/seller/incoming-orders", icon: ClipboardList },
+    { label: "Order History", href: "/seller/order-history", icon: History },
 ];
 
-export default SELLER_SIDEBAR_MENU
+export default SELLER_SIDEBAR_MENU;

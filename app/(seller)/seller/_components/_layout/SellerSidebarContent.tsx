@@ -7,29 +7,23 @@ import { cn } from "cn";
 import SELLER_SIDEBAR_MENU from "../../_constants/SellerSidebarMenu";
 
 const SellerSidebarContent = () => {
-    const pathname = usePathname();
     const { state } = useSidebar();
     const isCollapsed = state === "collapsed";
+    const pathname = usePathname();
 
     return (
         <SidebarContent>
             <SidebarGroup>
-                <SidebarGroupLabel
-                    className={cn(
-                        "mb-1 h-7 text-xs font-medium uppercase tracking-wider text-sidebar-foreground opacity-50",
-                        "group-data-[collapsible=icon]:mt-0! group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:opacity-50!",
-                    )}
-                >
+                <SidebarGroupLabel className={cn("font-medium uppercase tracking-wider text-sidebar-foreground opacity-50", "group-data-[collapsible=icon]:mt-0! group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:opacity-50!")}>
                     {isCollapsed ? "Menu" : "Main Menu"}
                 </SidebarGroupLabel>
 
                 <SidebarGroupContent>
                     <SidebarMenu className={cn(isCollapsed && "items-center")}>
-                        {SELLER_SIDEBAR_MENU.map(({ label, href, icon: Icon }) => {
-                            const isActive = pathname.startsWith(href);
-
+                        {SELLER_SIDEBAR_MENU.map((data) => {
+                            const isActive = pathname.startsWith(data.href);
                             return (
-                                <SidebarMenuItem key={href}>
+                                <SidebarMenuItem key={data.href}>
                                     {isActive && (
                                         <span
                                             className={cn(
@@ -41,16 +35,16 @@ const SellerSidebarContent = () => {
                                     )}
 
                                     <SidebarMenuButton
-                                        render={<Link href={href} />}
+                                        render={<Link href={data.href} />}
                                         isActive={isActive}
-                                        tooltip={label}
+                                        tooltip={data.label}
                                         className={cn(
                                             "h-9 text-sidebar-foreground",
                                             isActive &&
                                             "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground data-active:bg-primary data-active:text-primary-foreground",
                                         )}
                                     >
-                                        <Icon
+                                        <data.icon
                                             className={cn(
                                                 "opacity-50 transition-opacity group-hover/menu-button:opacity-100",
                                                 isActive && "opacity-100",
@@ -62,7 +56,7 @@ const SellerSidebarContent = () => {
                                                 isActive && "opacity-100",
                                             )}
                                         >
-                                            {label}
+                                            {data.label}
                                         </span>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
