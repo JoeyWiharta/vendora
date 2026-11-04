@@ -2,7 +2,7 @@
 export const instant = false;
 
 import SellerMainWrapper from "../_components/_layout/SellerMainWrapper";
-import ProductListView from "../_components/common/ProductListView";
+import ProductListView from "../_components/_common/ProductListView";
 
 const MyProductsPage = () => {
     return (

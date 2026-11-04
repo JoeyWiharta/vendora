@@ -6,15 +6,16 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useSellerProducts } from "../../_hooks/useSellerProducts";
+import { Timestamp } from "firebase/firestore";
 
 const formatRupiah = (value: number) =>
     new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(value);
 
-const formatDate = (millis: number) =>
-    millis ? new Intl.DateTimeFormat("en-GB", { dateStyle: "medium" }).format(millis) : "-";
+const formatDate = (timestamp: Timestamp) =>
+    new Intl.DateTimeFormat("en-GB", { dateStyle: "medium" }).format(timestamp.toDate());
 
 const ProductListView = () => {
-    const { data: products, isLoading, isError } = useSellerProducts();
+    const { data: products, isLoading, isError, error } = useSellerProducts();
 
     if (isLoading) {
         return (
@@ -27,7 +28,8 @@ const ProductListView = () => {
     }
 
     if (isError) {
-        return <p className="text-sm text-destructive">Failed to load products. Please try again.</p>;
+        console.error("Product list error:", error);
+        return <p className="text-sm text-destructive">Failed to load products: {error.message}</p>;
     }
 
     if (!products?.length) {
