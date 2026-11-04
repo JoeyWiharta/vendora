@@ -4,6 +4,7 @@ import SellerHeader from "./_components/_layout/SellerHeader";
 import SellerSidebarContent from "./_components/_layout/SellerSidebarContent";
 import SellerSidebarFooter from "./_components/_layout/SellerSidebarFooter";
 import SellerSidebarHeader from "./_components/_layout/SellerSidebarHeader";
+import SellerFooter from "./_components/_layout/SellerFooter";
 
 export default function SellerLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -11,7 +12,6 @@ export default function SellerLayout({ children }: { children: React.ReactNode }
             <SidebarProvider>
                 <Sidebar collapsible="icon">
                     <SellerSidebarHeader />
-                    <SidebarSeparator className="mx-auto w-[90%]!" />
                     <SellerSidebarContent />
                     <SellerSidebarFooter />
                 </Sidebar>
@@ -19,6 +19,7 @@ export default function SellerLayout({ children }: { children: React.ReactNode }
                 <SidebarInset>
                     <SellerHeader />
                     <main className="flex-1 p-4 md:p-6">{children}</main>
+                    <SellerFooter />
                 </SidebarInset>
             </SidebarProvider>
         </SellerGuard>
