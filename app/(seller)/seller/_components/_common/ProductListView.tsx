@@ -7,6 +7,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useSellerProducts } from "../../_hooks/useSellerProducts";
 import { Timestamp } from "firebase/firestore";
+import Image from "next/image";
+import Link from "next/link";
 
 const formatRupiah = (value: number) =>
     new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(value);
@@ -56,19 +58,29 @@ const ProductListView = () => {
                 </TableHeader>
                 <TableBody>
                     {products.map((p) => (
-                        <TableRow key={p.id}>
+                        <TableRow key={p.id} className="relative cursor-pointer hover:bg-muted/50">
                             <TableCell>
                                 <div className="flex items-center gap-3">
                                     <div className="flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-muted">
                                         {p.productImage ? (
-                                            // eslint-disable-next-line @next/next/no-img-element
-                                            <img src={p.productImage} alt={p.productName} className="size-full object-cover" />
+                                            <Image
+                                                src={p.productImage}
+                                                alt={p.productName}
+                                                width={40}
+                                                height={40}
+                                                className="size-full object-cover"
+                                            />
                                         ) : (
                                             <Package className="size-4 text-muted-foreground" />
                                         )}
                                     </div>
                                     <div className="min-w-0">
-                                        <p className="truncate font-medium">{p.productName}</p>
+                                        <Link
+                                            href={`/seller/my-products/${p.id}`}
+                                            className="truncate font-medium after:absolute after:inset-0 after:content-['']"
+                                        >
+                                            {p.productName}
+                                        </Link>
                                         <p className="truncate text-xs text-muted-foreground">{p.description}</p>
                                     </div>
                                 </div>
