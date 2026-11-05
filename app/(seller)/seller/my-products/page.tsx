@@ -16,7 +16,7 @@ const MyProductsPage = () => {
                 <Button
                     size="lg"
                     render={
-                        <Link href="/seller/my-products/new" />
+                        <Link href="/seller/my-products/add" />
                     }
                     nativeButton={false}>
                     <Plus className="size-4" />

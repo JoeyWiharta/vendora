@@ -1,6 +1,6 @@
-import { collection, getDocs, query, where, type Timestamp } from "firebase/firestore"
+import { addDoc, collection, getDocs, query, serverTimestamp, where, type Timestamp } from "firebase/firestore"
 import { dbFirebase } from "@/lib/firebase"
-import type { Product } from "../_types/productTypes"
+import type { AddProductPayload, Product } from "../_types/productTypes"
 
 interface getSellerProductsParam {
     sellerId: string
@@ -25,4 +25,12 @@ export const getSellerProducts = async (param: getSellerProductsParam): Promise<
         } satisfies Product;
     })
         .sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis());
+}
+
+export const addSellerProduct = async (payload: AddProductPayload): Promise<string> => {
+    const docRef = await addDoc(collection(dbFirebase, "master-products"), {
+        ...payload,
+        createdAt: serverTimestamp(),
+    })
+    return docRef.id
 }

@@ -1,0 +1,1 @@
+export const DEFAULT_PRODUCT_IMAGE = "https://res.cloudinary.com/wtv5wkec/image/upload/v1793843822/default-images.jpg"
