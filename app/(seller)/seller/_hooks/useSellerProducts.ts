@@ -4,7 +4,6 @@ import { getSellerProducts } from "../_services/productService";
 
 export const SELLER_PRODUCTS_QUERY_KEY = ["seller-products"] as const;
 
-
 export const useSellerProducts = () => {
     const sellerId = useAuthStore((s) => s.user?.uid);
 

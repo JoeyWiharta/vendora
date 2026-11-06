@@ -14,7 +14,7 @@ export interface Product {
     createdAt: Timestamp;
 }
 
-export type AddProductForm = z.infer<typeof addProductSchema>
+export type AddProductFormPayload = z.infer<typeof addProductSchema>
 
 export interface AddProductPayload {
     sellerId: string

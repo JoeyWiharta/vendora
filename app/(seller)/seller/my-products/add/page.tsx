@@ -1,3 +1,5 @@
+export const instant = false;
+
 import SellerMainWrapper from "../../_components/_layout/SellerMainWrapper"
 import AddProductForm from "../../_components/_common/AddProductForm"
 
