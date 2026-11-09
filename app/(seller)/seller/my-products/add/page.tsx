@@ -1,7 +1,7 @@
 export const instant = false;
 
 import SellerMainWrapper from "../../_components/_layout/SellerMainWrapper"
-import AddProductForm from "../../_components/_common/AddProductForm"
+import ProductForm from "../../_components/_common/ProductForm"
 
 const AddProductPage = () => {
     return (
@@ -9,7 +9,7 @@ const AddProductPage = () => {
             title="Add Product"
             description="Add a new product to your store."
         >
-            <AddProductForm />
+            <ProductForm />
         </SellerMainWrapper>
     )
 }

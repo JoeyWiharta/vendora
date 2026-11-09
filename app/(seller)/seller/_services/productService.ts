@@ -1,36 +1,53 @@
-import { addDoc, collection, getDocs, query, serverTimestamp, where, type Timestamp } from "firebase/firestore"
-import { dbFirebase } from "@/lib/firebase"
-import type { AddProductPayload, Product } from "../_types/productTypes"
+import { addDoc, collection, deleteDoc, doc, getDocs, query, serverTimestamp, updateDoc, where, type Timestamp } from "firebase/firestore";
+import { dbFirebase } from "@/lib/firebase";
+import type { AddProductPayload, Product, UpdateProductPayload } from "../_types/productTypes";
 
-interface getSellerProductsParam {
-    sellerId: string
+interface GetSellerProductsParam {
+    sellerId: string;
 }
 
-export const getSellerProducts = async (param: getSellerProductsParam): Promise<Product[]> => {
-    const q = query(collection(dbFirebase, "master-products"), where("sellerId", "==", param.sellerId))
+export const getSellerProducts = async (param: GetSellerProductsParam): Promise<Product[]> => {
+    const q = query(collection(dbFirebase, "master-products"), where("sellerId", "==", param.sellerId));
     const snapshot = await getDocs(q);
-
-    return snapshot.docs.map((doc) => {
-        const data = doc.data();
-        return {
-            id: doc.id,
-            productName: data.productName ?? "",
-            productCategory: data.productCategory ?? "",
-            productImage: data.productImage ?? "",
-            productPrice: data.productPrice ?? 0,
-            productStock: data.productStock ?? 0,
-            description: data.description ?? "",
-            sellerId: data.sellerId,
-            createdAt: data.createdAt as Timestamp,
-        } satisfies Product;
-    })
+    return snapshot.docs
+        .map((doc) => {
+            const data = doc.data();
+            return {
+                id: doc.id,
+                productName: data.productName ?? "",
+                productCategory: data.productCategory ?? "",
+                productImage: data.productImage ?? "",
+                productImagePublicId: data.productImagePublicId ?? null,
+                productPrice: data.productPrice ?? 0,
+                productStock: data.productStock ?? 0,
+                description: data.description ?? "",
+                sellerId: data.sellerId,
+                createdAt: data.createdAt as Timestamp,
+            } satisfies Product;
+        })
         .sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis());
-}
+};
 
 export const addSellerProduct = async (payload: AddProductPayload): Promise<string> => {
-    const docRef = await addDoc(collection(dbFirebase, "master-products"), {
+    const docRef = await addDoc(
+        collection(dbFirebase, "master-products"),
+        {
+            ...payload,
+            createdAt: serverTimestamp(),
+        }
+    );
+    return docRef.id;
+};
+
+export const updateSellerProduct = async (id: string, payload: UpdateProductPayload): Promise<void> => {
+    await updateDoc(doc(dbFirebase, "master-products", id), {
         ...payload,
-        createdAt: serverTimestamp(),
-    })
-    return docRef.id
-}
+        updatedAt: serverTimestamp(),
+    });
+};
+
+
+
+export const deleteSellerProduct = async (id: string): Promise<void> => {
+    await deleteDoc(doc(dbFirebase, "master-products", id));
+};

@@ -2,7 +2,7 @@ import { z } from "zod"
 
 export const MAX_IMAGE_MB = 2
 
-export const addProductSchema = z.object({
+export const addEditProductSchema = z.object({
     productName: z.string().trim().min(6, "Product name must be more than 5 characters"),
     productCategory: z.string().min(1, "Please select a product category"),
     description: z.string().trim().min(1, "Description is required"),

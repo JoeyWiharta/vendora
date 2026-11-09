@@ -1,12 +1,13 @@
 import { Timestamp } from "firebase/firestore";
-import { addProductSchema } from "../_schema/productAddSchema";
-import { z } from "zod"
+import { addEditProductSchema } from "../_schema/productAddEditSchema";
+import { z } from "zod";
 
 export interface Product {
     id: string;
     productName: string;
     productCategory: string;
     productImage: string;
+    productImagePublicId: string | null;
     productPrice: number;
     productStock: number;
     description: string;
@@ -14,14 +15,22 @@ export interface Product {
     createdAt: Timestamp;
 }
 
-export type AddProductFormPayload = z.infer<typeof addProductSchema>
+export type AddProductFormPayload = z.infer<typeof addEditProductSchema>;
 
 export interface AddProductPayload {
-    sellerId: string
-    productName: string
-    productCategory: string
-    description: string
-    productPrice: number
-    productStock: number
-    productImage: string
+    sellerId: string;
+    productName: string;
+    productCategory: string;
+    description: string;
+    productPrice: number;
+    productStock: number;
+    productImage: string;
+    productImagePublicId: string | null;
+}
+
+export type UpdateProductPayload = Omit<AddProductPayload, "sellerId">;
+
+export interface CloudinaryUploadResult {
+    secure_url: string;
+    public_id: string;
 }

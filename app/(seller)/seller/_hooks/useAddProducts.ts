@@ -20,12 +20,14 @@ export const useAddProduct = () => {
             const promise = (async () => {
                 if (!sellerId) throw new Error("Not authenticated");
 
-                const productImage = values.image ? await uploadImageToCloudinary(values.image) : DEFAULT_PRODUCT_IMAGE;
+                const uploadResult = values.image ? await uploadImageToCloudinary(values.image) : null;
+
                 const { image, ...data } = values;
 
                 return addSellerProduct({
                     ...data,
-                    productImage,
+                    productImage: uploadResult?.secure_url ?? DEFAULT_PRODUCT_IMAGE,
+                    productImagePublicId: uploadResult?.public_id ?? null,
                     sellerId,
                 });
             })();
