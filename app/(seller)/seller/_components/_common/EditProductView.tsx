@@ -12,9 +12,7 @@ interface EditProductViewProps {
 
 const EditProductView = ({ id }: EditProductViewProps) => {
     const { data: products, isLoading } = useSellerProducts();
-
     const product = products?.find((item) => item.id === id);
-
     if (isLoading) {
         return <Skeleton className="h-96 w-full rounded-xl" />;
     }

@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Trash2, UploadCloud } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
@@ -25,11 +25,7 @@ import { useAddProduct } from "../../_hooks/useAddProducts"
 import { useUpdateProduct } from "../../_hooks/useUpdateProduct"
 import type { AddProductFormPayload, Product } from "../../_types/productTypes"
 
-interface ProductFormProps {
-    product?: Product
-}
-
-const ProductForm = ({ product }: ProductFormProps) => {
+const ProductForm = ({ product }: { product?: Product }) => {
     const isEdit = !!product
 
     const { mutate: addProduct, isPending: isAdding } = useAddProduct()
@@ -39,10 +35,9 @@ const ProductForm = ({ product }: ProductFormProps) => {
     const [isDragging, setIsDragging] = useState(false)
     const [previewImage, setPreviewImage] = useState<string | null>(null)
     const fileInputRef = useRef<HTMLInputElement>(null)
-
     const existingImage = product?.productImage && product.productImage !== DEFAULT_PRODUCT_IMAGE ? product.productImage : null
 
-    const { register, control, handleSubmit, setValue, watch, reset, formState: { errors } } = useForm<AddProductFormPayload>({
+    const { register, control, handleSubmit, setValue, watch, formState: { errors }, reset } = useForm<AddProductFormPayload>({
         resolver: zodResolver(addEditProductSchema),
         defaultValues: {
             productName: product?.productName ?? "",
@@ -54,14 +49,11 @@ const ProductForm = ({ product }: ProductFormProps) => {
         },
     })
 
-    const [image, productName, productCategory, description, productPrice, productStock] = watch([
-        "image",
-        "productName",
-        "productCategory",
-        "description",
-        "productPrice",
-        "productStock",
-    ])
+    useEffect(() => {
+        reset()
+    }, [reset])
+
+    const [image, productName, productCategory, description, productPrice, productStock] = watch(["image", "productName", "productCategory", "description", "productPrice", "productStock"])
 
     useEffect(() => {
         if (!image) {
@@ -87,28 +79,41 @@ const ProductForm = ({ product }: ProductFormProps) => {
         setIsDragging(false)
         if (isPending) return
         const file = e.dataTransfer.files?.[0]
-        if (file && file.type.startsWith("image/")) pickFile(file)
+        if (file?.type.startsWith("image/")) pickFile(file)
     }
 
-    useEffect(() => {
-        reset()
-    }, [reset])
+    const onSubmit = (data: AddProductFormPayload) => {
+        if (!product) return addProduct(data)
+        updateProduct({
+            id: product.id,
+            data: {
+                ...data,
+                productImage: product.productImage,
+                productImagePublicId: product.productImagePublicId,
+            },
+        })
+    }
+
+    const actionButtons = (
+        <>
+            <Button
+                variant="outline"
+                size="lg"
+                disabled={isPending}
+                nativeButton={false}
+                render={<Link href="/seller/my-products" />}
+            >
+                Cancel
+            </Button>
+            <Button type="submit" size="lg" disabled={isPending}>
+                {isPending && <Spinner />}
+                {isPending ? "Saving..." : isEdit ? "Save changes" : "Add product"}
+            </Button>
+        </>
+    )
 
     return (
-        <form
-            onSubmit={handleSubmit((data) =>
-                isEdit
-                    ? updateProduct({
-                        id: product.id,
-                        data: {
-                            ...data,
-                            productImage: product.productImage,
-                            productImagePublicId: product.productImagePublicId,
-                        },
-                    }) : addProduct(data))}
-            noValidate
-            className="w-full pb-20 md:pb-0"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} noValidate className="w-full pb-20 md:pb-0">
             <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_20rem] xl:grid-cols-[minmax(0,1fr)_22rem]">
                 <div className="grid min-w-0 gap-5">
                     <Card>
@@ -231,11 +236,7 @@ const ProductForm = ({ product }: ProductFormProps) => {
                     <Card>
                         <CardHeader>
                             <CardTitle>Product image</CardTitle>
-                            <p className="text-sm text-muted-foreground">
-                                {isEdit
-                                    ? "Optional. Leave as is to keep the current image."
-                                    : "Optional. A default image is used if skipped."}
-                            </p>
+                            <CardDescription>{isEdit ? "Optional. Leave as is to keep the current image." : "Optional. A default image is used if skipped."}</CardDescription>
                         </CardHeader>
                         <CardContent>
                             <Field data-invalid={!!errors.image}>
@@ -264,9 +265,7 @@ const ProductForm = ({ product }: ProductFormProps) => {
                                         if (!isPending) setIsDragging(true)
                                     }}
                                     onDragLeave={(e) => {
-                                        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
-                                            setIsDragging(false)
-                                        }
+                                        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setIsDragging(false)
                                     }}
                                     onDrop={handleDrop}
                                     className={cn(
@@ -280,13 +279,7 @@ const ProductForm = ({ product }: ProductFormProps) => {
                                     {image && previewImage ? (
                                         <>
                                             <div className="relative size-12 shrink-0 overflow-hidden rounded-md border bg-muted">
-                                                <Image
-                                                    src={previewImage}
-                                                    alt="Selected image"
-                                                    fill
-                                                    unoptimized
-                                                    className="object-cover"
-                                                />
+                                                <Image src={previewImage} alt="Selected image" fill unoptimized className="object-cover" />
                                             </div>
                                             <div className="min-w-0 flex-1">
                                                 <p className="truncate text-sm font-medium">{image.name}</p>
@@ -311,13 +304,7 @@ const ProductForm = ({ product }: ProductFormProps) => {
                                     ) : existingImage ? (
                                         <>
                                             <div className="relative size-12 shrink-0 overflow-hidden rounded-md border bg-muted">
-                                                <Image
-                                                    src={existingImage}
-                                                    alt="Current image"
-                                                    fill
-                                                    unoptimized
-                                                    className="object-cover"
-                                                />
+                                                <Image src={existingImage} alt="Current image" fill unoptimized className="object-cover" />
                                             </div>
                                             <div className="min-w-0 flex-1">
                                                 <p className="text-sm font-medium">Current image</p>
@@ -333,9 +320,7 @@ const ProductForm = ({ product }: ProductFormProps) => {
                                                 <p className="text-sm font-medium">
                                                     <span className="text-primary">Click to upload</span> or drag and drop
                                                 </p>
-                                                <p className="text-xs text-muted-foreground">
-                                                    Image file · max {MAX_IMAGE_MB}MB
-                                                </p>
+                                                <p className="text-xs text-muted-foreground">Image file · max {MAX_IMAGE_MB}MB</p>
                                             </div>
                                         </>
                                     )}
@@ -345,25 +330,9 @@ const ProductForm = ({ product }: ProductFormProps) => {
                             </Field>
                         </CardContent>
                     </Card>
-
-                    <div className="hidden justify-end gap-2 md:flex">
-                        <Button
-                            variant="outline"
-                            disabled={isPending}
-                            nativeButton={false}
-                            render={<Link href="/seller/my-products" />}
-                            className="min-w-28"
-                        >
-                            Cancel
-                        </Button>
-                        <Button type="submit" disabled={isPending} className="min-w-32">
-                            {isPending && <Spinner />}
-                            {isPending ? "Saving..." : isEdit ? "Save changes" : "Add product"}
-                        </Button>
-                    </div>
                 </div>
 
-                <aside className="hidden min-w-0 lg:sticky lg:top-6 lg:block">
+                <aside className="hidden min-w-0 gap-4 lg:sticky lg:top-20 lg:grid">
                     <Card className="gap-0 overflow-hidden py-0">
                         <div className="relative aspect-4/3 bg-muted">
                             <Image
@@ -383,17 +352,11 @@ const ProductForm = ({ product }: ProductFormProps) => {
                         </div>
 
                         <CardContent className="grid min-w-0 gap-2 py-4">
-                            <Badge
-                                variant="secondary"
-                                className={cn("w-fit", !productCategory && "text-muted-foreground")}
-                            >
+                            <Badge variant="secondary" className={cn("w-fit", !productCategory && "text-muted-foreground")}>
                                 {productCategory || "Category"}
                             </Badge>
                             <p
-                                className={cn(
-                                    "line-clamp-2 wrap-break-word text-sm font-medium leading-snug",
-                                    !productName && "text-muted-foreground",
-                                )}
+                                className={cn("line-clamp-2 wrap-break-word text-sm font-medium leading-snug", !productName && "text-muted-foreground")}
                             >
                                 {productName || "Your product name"}
                             </p>
@@ -407,23 +370,17 @@ const ProductForm = ({ product }: ProductFormProps) => {
                             </p>
                         </CardContent>
                     </Card>
+
+                    <div className="grid grid-cols-[1fr_2fr] gap-2">{actionButtons}</div>
                 </aside>
             </div>
 
+            <div className="mt-5 ml-auto hidden w-80 grid-cols-[1fr_2fr] gap-2 md:grid lg:hidden">
+                {actionButtons}
+            </div>
+
             <div className="fixed inset-x-0 bottom-0 z-20 grid grid-cols-[1fr_2fr] gap-2 border-t bg-background/95 p-3 backdrop-blur md:hidden">
-                <Button
-                    variant="outline"
-                    size="lg"
-                    disabled={isPending}
-                    nativeButton={false}
-                    render={<Link href="/seller/my-products" />}
-                >
-                    Cancel
-                </Button>
-                <Button type="submit" size="lg" disabled={isPending}>
-                    {isPending && <Spinner />}
-                    {isPending ? "Saving..." : isEdit ? "Save changes" : "Add product"}
-                </Button>
+                {actionButtons}
             </div>
         </form>
     )

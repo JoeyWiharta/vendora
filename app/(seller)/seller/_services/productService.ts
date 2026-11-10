@@ -22,6 +22,7 @@ export const getSellerProducts = async (param: GetSellerProductsParam): Promise<
                 productStock: data.productStock ?? 0,
                 description: data.description ?? "",
                 sellerId: data.sellerId,
+                updatedAt: data.updatedAt ?? "-",
                 createdAt: data.createdAt as Timestamp,
             } satisfies Product;
         })
@@ -33,6 +34,7 @@ export const addSellerProduct = async (payload: AddProductPayload): Promise<stri
         collection(dbFirebase, "master-products"),
         {
             ...payload,
+            updatedAt: "-",
             createdAt: serverTimestamp(),
         }
     );

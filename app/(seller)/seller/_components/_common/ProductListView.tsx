@@ -4,26 +4,10 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import {
-    ChevronLeft,
-    ChevronRight,
-    MoreHorizontal,
-    Package,
-    Pencil,
-    Plus,
-    RefreshCw,
-    Search,
-    Trash2,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Package, Plus, RefreshCw, Search, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -78,6 +62,9 @@ const ProductListView = () => {
 
     const allPageSelected = pageItems.length > 0 && pageItems.every((p) => selectedIds.has(p.id));
     const somePageSelected = pageItems.some((p) => selectedIds.has(p.id));
+
+    // ---------- navigation ----------
+    const editHref = (id: string) => `/seller/my-products/edit/${id}`;
 
     // ---------- selection handlers ----------
     const toggleOne = (id: string, checked: boolean) =>
@@ -238,10 +225,12 @@ const ProductListView = () => {
                             <TableHead className={cn(headClass, "w-[40%]")}>Product</TableHead>
                             <TableHead className={cn(headClass, "hidden md:table-cell")}>Category</TableHead>
                             <TableHead className={cn(headClass, "text-right")}>Price</TableHead>
-                            <TableHead className={cn(headClass, "text-right")}>Stock</TableHead>
-                            <TableHead className={cn(headClass, "hidden text-right lg:table-cell")}>Created</TableHead>
-                            <TableHead className={cn(headClass, "w-12 pr-4")}>
-                                <span className="sr-only">Actions</span>
+                            <TableHead className={cn(headClass, "pr-4 text-right lg:pr-2")}>Stock</TableHead>
+                            <TableHead className={cn(headClass, "hidden pr-4 text-right lg:table-cell")}>
+                                Updated
+                            </TableHead>
+                            <TableHead className={cn(headClass, "hidden pr-4 text-right lg:table-cell")}>
+                                Created
                             </TableHead>
                         </TableRow>
                     </TableHeader>
@@ -249,7 +238,7 @@ const ProductListView = () => {
                     <TableBody>
                         {pageItems.length === 0 ? (
                             <TableRow className="hover:bg-transparent">
-                                <TableCell colSpan={7} className="py-12 text-center text-sm text-muted-foreground">
+                                <TableCell colSpan={6} className="py-12 text-center text-sm text-muted-foreground">
                                     No products match your search or filter.
                                 </TableCell>
                             </TableRow>
@@ -257,10 +246,25 @@ const ProductListView = () => {
                             pageItems.map((p) => (
                                 <TableRow
                                     key={p.id}
+                                    tabIndex={0}
                                     data-state={selectedIds.has(p.id) ? "selected" : undefined}
-                                    className="hover:bg-muted/40"
+                                    className="cursor-pointer hover:bg-muted/40 focus-visible:bg-muted/40 focus-visible:outline-none"
+                                    onClick={() => router.push(editHref(p.id))}
+                                    onMouseEnter={() => router.prefetch(editHref(p.id))}
+                                    onKeyDown={(e) => {
+                                        if (e.target !== e.currentTarget) return;
+                                        if (e.key === "Enter" || e.key === " ") {
+                                            e.preventDefault();
+                                            router.push(editHref(p.id));
+                                        }
+                                    }}
                                 >
-                                    <TableCell className="pl-4">
+                                    {/* Checkbox: jangan ikut memicu klik baris */}
+                                    <TableCell
+                                        className="pl-4"
+                                        onClick={(e) => e.stopPropagation()}
+                                        onKeyDown={(e) => e.stopPropagation()}
+                                    >
                                         <Checkbox
                                             aria-label={`Select ${p.productName}`}
                                             checked={selectedIds.has(p.id)}
@@ -287,6 +291,10 @@ const ProductListView = () => {
                                                 <p className="truncate font-medium">{p.productName}</p>
                                                 <p className="truncate text-xs text-muted-foreground">{p.description}</p>
                                                 <p className="mt-0.5 text-xs text-muted-foreground lg:hidden">
+                                                    {typeof p.updatedAt === "string"
+                                                        ? p.updatedAt
+                                                        : formatDate(p.updatedAt.toDate())}                                                </p>
+                                                <p className="mt-0.5 text-xs text-muted-foreground lg:hidden">
                                                     {formatDate(p.createdAt.toDate())}
                                                 </p>
                                             </div>
@@ -301,7 +309,7 @@ const ProductListView = () => {
                                         {formatRupiah(p.productPrice)}
                                     </TableCell>
 
-                                    <TableCell className="whitespace-nowrap text-right">
+                                    <TableCell className="whitespace-nowrap pr-4 text-right lg:pr-2">
                                         {p.productStock === 0 ? (
                                             <Badge variant="destructive">Out of stock</Badge>
                                         ) : (
@@ -312,37 +320,14 @@ const ProductListView = () => {
                                         )}
                                     </TableCell>
 
-                                    <TableCell className="hidden whitespace-nowrap text-right text-muted-foreground lg:table-cell">
-                                        {formatDate(p.createdAt.toDate())}
+                                    <TableCell className="hidden whitespace-nowrap pr-4 text-right text-muted-foreground lg:table-cell">
+                                        {typeof p.updatedAt === "string"
+                                            ? p.updatedAt
+                                            : formatDate(p.updatedAt.toDate())}
                                     </TableCell>
 
-                                    <TableCell className="pr-4 text-right">
-                                        <DropdownMenu>
-                                            <DropdownMenuTrigger
-                                                render={
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="icon"
-                                                        className="size-8"
-                                                        aria-label="Open actions"
-                                                    />
-                                                }
-                                            >
-                                                <MoreHorizontal />
-                                            </DropdownMenuTrigger>
-                                            <DropdownMenuContent align="end">
-                                                <DropdownMenuItem
-                                                    onClick={() => router.push(`/seller/my-products/edit/${p.id}`)}
-                                                >
-                                                    <Pencil />
-                                                    Edit
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem variant="destructive" onClick={() => setToDelete([p])}>
-                                                    <Trash2 />
-                                                    Delete
-                                                </DropdownMenuItem>
-                                            </DropdownMenuContent>
-                                        </DropdownMenu>
+                                    <TableCell className="hidden whitespace-nowrap pr-4 text-right text-muted-foreground lg:table-cell">
+                                        {formatDate(p.createdAt.toDate())}
                                     </TableCell>
                                 </TableRow>
                             ))
@@ -360,7 +345,6 @@ const ProductListView = () => {
                         </p>
 
                         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                            {/* Rows per page */}
                             <div className="flex items-center gap-2">
                                 <span className="text-xs text-muted-foreground">Rows per page</span>
                                 <Select value={String(pageSize)} onValueChange={handlePageSize}>
@@ -377,7 +361,6 @@ const ProductListView = () => {
                                 </Select>
                             </div>
 
-                            {/* Page navigation */}
                             <div className="flex items-center gap-2">
                                 <Button
                                     variant="outline"
