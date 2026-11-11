@@ -13,7 +13,7 @@ import { Switch } from "@/components/ui/switch";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useAuthStore } from "@/app/(authentication)/_shared/_store/authStore";
 import { cn } from "@/lib/utils";
-import { C } from "../../_constants/CustomerNavMenu";
+import { CUSTOMER_HEADER_ACTIONS } from "../../_constants/CustomerNavMenu";
 
 const CustomerHeader = () => {
     const pathname = usePathname();
