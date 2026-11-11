@@ -1,8 +1,8 @@
 "use client";
 
-import { authPath } from "@/app/(authentication)/_utils/authPath";
+import { authPath } from "@/app/(authentication)/_shared/_utils/authPath";
 import PageLoader from "@/components/common/PageLoader";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/app/(authentication)/_shared/_store/authStore";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 

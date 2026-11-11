@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/app/(authentication)/_shared/_store/authStore";
 import { getMyOrders } from "../_services/orderService";
 
 export const useOrders = () => {

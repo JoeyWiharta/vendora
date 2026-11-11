@@ -2,9 +2,9 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/store/authStore";
-import { authPath } from "@/app/(authentication)/_utils/authPath";
-import type { UserRole } from "@/app/(authentication)/_types/authTypes";
+import { useAuthStore } from "@/app/(authentication)/_shared/_store/authStore";
+import { authPath } from "@/app/(authentication)/_shared/_utils/authPath";
+import type { UserRole } from "@/app/(authentication)/_shared/_types/authTypes";
 
 export const useRoleGuard = (required: UserRole) => {
     const user = useAuthStore((s) => s.user);

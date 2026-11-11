@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner"; // samakan dengan project
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/app/(authentication)/_shared/_store/authStore";
 import type { CartItem } from "../_types/cartTypes";
 import { checkout } from "../_services/orderService";
 import { CART_QUERY_KEY } from "./useCart";

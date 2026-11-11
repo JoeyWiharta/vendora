@@ -3,8 +3,8 @@
 import { useEffect } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { authFirebase } from "@/lib/firebase";
-import { authFlow } from "@/store/authFlow";
-import { useAuthStore } from "@/store/authStore";
+import { authFlow } from "@/app/(authentication)/_shared/_store/authFlow";
+import { useAuthStore } from "@/app/(authentication)/_shared/_store/authStore";
 import { getUserData } from "../_services/authService";
 
 const AuthListener = () => {

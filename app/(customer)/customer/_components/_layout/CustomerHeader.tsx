@@ -6,12 +6,12 @@ import { usePathname } from "next/navigation";
 import { useTheme } from "@wrksz/themes/client";
 import { LogOut, Moon } from "lucide-react";
 import VendoraLogo from "@/assets/logo/vendora-logo.svg";
-import { useLogout } from "@/app/(authentication)/_hooks/useLogout";
+import { useLogout } from "@/app/(authentication)/_shared/_hooks/useLogout";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Switch } from "@/components/ui/switch";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/app/(authentication)/_shared/_store/authStore";
 import { cn } from "@/lib/utils";
 import { CUSTOMER_HEADER_ACTIONS } from "../../_constants/CustomerNavMenu";
 

@@ -3,7 +3,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/app/(authentication)/_shared/_store/authStore";
 import { queryClient } from "@/query/queryClient";
 import { uploadImageToCloudinary } from "../_services/uploadImageService";
 import { addSellerProduct } from "../_services/productService";

@@ -1,6 +1,6 @@
 import type { z } from "zod";
 import type { registerSchema } from "../_schemas/registerSchema";
-import type { UserRole } from "./authTypes";
+import type { UserRole } from "../../_shared/_types/authTypes";
 
 export type RegisterFormValues = z.infer<typeof registerSchema>;
 

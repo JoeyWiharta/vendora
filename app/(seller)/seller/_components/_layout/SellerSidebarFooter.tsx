@@ -8,8 +8,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { SidebarFooter, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
 import { Switch } from "@/components/ui/switch";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { useLogout } from "@/app/(authentication)/_hooks/useLogout";
-import { useAuthStore } from "@/store/authStore";
+import { useLogout } from "@/app/(authentication)/_shared/_hooks/useLogout";
+import { useAuthStore } from "@/app/(authentication)/_shared/_store/authStore";
 
 const SellerSidebarFooter = () => {
     const { isMobile } = useSidebar();

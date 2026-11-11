@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner"; // samakan dengan library toast di project kamu
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/app/(authentication)/_shared/_store/authStore";
 import { addToCart, getCartItemQuantity, getCartItems, removeCartItem, setCartQuantity } from "../_services/cartService";
 
 export const CART_QUERY_KEY = ["customer-cart"] as const;

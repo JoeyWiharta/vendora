@@ -3,11 +3,11 @@
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { useAuthStore } from "@/store/authStore";
-import { loginUser } from "../_services/authService";
+import { useAuthStore } from "@/app/(authentication)/_shared/_store/authStore";
+import { loginUser } from "../../_shared/_services/authService";
 import type { LoginPayload } from "../_types/loginTypes";
-import { authPath } from "../_utils/authPath";
-import { authErrorMessage } from "../_utils/authErrorMessage";
+import { authPath } from "../../_shared/_utils/authPath";
+import { authErrorMessage } from "../../_shared/_utils/authErrorMessage";
 
 export const useLogin = () => {
     const router = useRouter();

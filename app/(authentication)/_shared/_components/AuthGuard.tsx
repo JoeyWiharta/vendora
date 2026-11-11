@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import PageLoader from "@/components/common/PageLoader";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/app/(authentication)/_shared/_store/authStore";
 import { authPath } from "../_utils/authPath";
 
 const AuthGuard = ({ children }: { children: React.ReactNode }) => {

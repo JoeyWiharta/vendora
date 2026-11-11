@@ -1,4 +1,4 @@
-import HomeRedirect from "@/components/common/HomeRedirect";
+import HomeRedirect from "@/app/(authentication)/_shared/_components/HomeRedirect";
 
 const Home = () => {
   return <HomeRedirect />;

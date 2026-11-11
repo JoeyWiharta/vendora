@@ -10,10 +10,10 @@ import { Field, FieldContent, FieldDescription, FieldError, FieldGroup, FieldLab
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/components/ui/input-group";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Spinner } from "@/components/ui/spinner";
-import { registerSchema } from "../_schemas/registerSchema";
-import { useRegister } from "../_hooks/useRegister";
-import type { RegisterFormValues } from "../_types/registerTypes";
-import { ROLE_OPTIONS } from "../_constants/RoleOptions";
+import { registerSchema } from "../register/_schemas/registerSchema";
+import { useRegister } from "../_shared/_hooks/useRegister";
+import type { RegisterFormValues } from "../register/_types/registerTypes";
+import { ROLE_OPTIONS } from "../register/_constants/roleOptions";
 
 const RegisterForm = () => {
     const [showPassword, setShowPassword] = useState(false);

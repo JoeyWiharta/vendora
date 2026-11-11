@@ -1,7 +1,7 @@
 export const instant = false;
 
 import { CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import RegisterForm from "../_components/RegisterForm";
+import RegisterForm from "../register/_components/RegisterForm";
 
 const RegisterPage = () => {
     return (

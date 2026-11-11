@@ -1,10 +1,10 @@
 import { createUserWithEmailAndPassword, deleteUser, signInWithEmailAndPassword, signOut, browserLocalPersistence, browserSessionPersistence, setPersistence, type User } from "firebase/auth";
 import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import { authFirebase, dbFirebase } from "@/lib/firebase";
-import { authFlow } from "@/store/authFlow";
+import { authFlow } from "@/app/(authentication)/_shared/_store/authFlow";
 import type { UserData, UserRole } from "../_types/authTypes";
-import type { LoginPayload } from "../_types/loginTypes";
-import type { RegisterPayload } from "../_types/registerTypes";
+import type { LoginPayload } from "../../login/_types/loginTypes";
+import type { RegisterPayload } from "../../register/_types/registerTypes";
 
 export const getUserData = async (firebaseUser: User): Promise<UserData> => {
     const snapshot = await getDoc(doc(dbFirebase, "master-users", firebaseUser.uid));

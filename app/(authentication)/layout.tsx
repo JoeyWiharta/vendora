@@ -1,9 +1,9 @@
 import Image from "next/image";
 import VendoraLogo from "@/assets/logo/vendora-logo.svg";
-import AuthIllustration from "./_components/AuthIllustration";
+import AuthIllustration from "./_shared/_components/AuthIllustration";
 import { Card } from "@/components/ui/card";
 import ThemeToggle from "@/components/common/ThemeToggle";
-import AuthGuard from "./_components/AuthGuard";
+import AuthGuard from "./_shared/_components/AuthGuard";
 
 interface AuthLayoutProps {
     children: React.ReactNode;
