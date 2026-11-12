@@ -6,6 +6,9 @@ const config = {
     testEnvironment: "jest-environment-jsdom",
     setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
     testPathIgnorePatterns: ["<rootDir>/.next/", "<rootDir>/node_modules/"],
+    moduleNameMapper: {
+        "^@/(.*)$": "<rootDir>/$1",
+    },
     collectCoverageFrom: [
         "app/**/*.{ts,tsx}",
         "!app/**/layout.tsx",
