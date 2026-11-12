@@ -5,7 +5,7 @@ import VendoraLogo from "@/assets/logo/vendora-logo.svg";
 import { SidebarHeader, useSidebar } from "@/components/ui/sidebar";
 import { cn } from "cn";
 
-const SellerSidebarHeader = () => {
+const HeaderSidebar = () => {
     const { state } = useSidebar();
     const isCollapsed = state === "collapsed";
 
@@ -17,4 +17,4 @@ const SellerSidebarHeader = () => {
     );
 };
 
-export default SellerSidebarHeader;
+export default HeaderSidebar;

@@ -21,7 +21,7 @@ const LoginForm = () => {
         resolver: zodResolver(loginSchema),
         defaultValues: {
             email: "",
-            password: "",
+            password: "Test1234",
             rememberMe: true,
         },
     });

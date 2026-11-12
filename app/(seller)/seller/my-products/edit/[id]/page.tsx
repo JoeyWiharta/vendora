@@ -1,6 +1,6 @@
 export const instant = false;
 
-import SellerMainWrapper from "../../../_components/_layout/SellerMainWrapper";
+import SellerMainWrapper from "../../../_shared/_components/LayoutMainWrapper";
 import EditProductView from "../../../_components/_common/EditProductView";
 
 const EditProductPage = async ({ params }: { params: Promise<{ id: string }> }) => {

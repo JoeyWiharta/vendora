@@ -4,23 +4,23 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
 import { cn } from "cn";
-import SELLER_SIDEBAR_MENU from "../../_constants/SellerSidebarMenu";
+import { SELLER_MENU } from "../_constants/sellerMenu";
 
-const SellerSidebarContent = () => {
+const ContentSidebar = () => {
     const { state } = useSidebar();
     const isCollapsed = state === "collapsed";
     const pathname = usePathname();
 
     return (
         <SidebarContent>
-            <SidebarGroup>
+            <SidebarGroup className="py-0">
                 <SidebarGroupLabel className={cn("font-medium uppercase tracking-wider text-sidebar-foreground opacity-50", "group-data-[collapsible=icon]:mt-0! group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:opacity-50!")}>
                     {isCollapsed ? "Menu" : "Main Menu"}
                 </SidebarGroupLabel>
 
                 <SidebarGroupContent>
                     <SidebarMenu className={cn(isCollapsed && "items-center")}>
-                        {SELLER_SIDEBAR_MENU.map((data) => {
+                        {SELLER_MENU.map((data) => {
                             const isActive = pathname.startsWith(data.href);
                             return (
                                 <SidebarMenuItem key={data.href}>
@@ -57,4 +57,4 @@ const SellerSidebarContent = () => {
     );
 };
 
-export default SellerSidebarContent;
+export default ContentSidebar;

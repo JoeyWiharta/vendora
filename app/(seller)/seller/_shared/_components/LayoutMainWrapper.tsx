@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 
-interface SellerMainWrapperProps {
+interface LayoutMainWrapperProps {
     title: string;
     description?: string;
     action?: ReactNode;
@@ -8,7 +8,7 @@ interface SellerMainWrapperProps {
 }
 
 
-const SellerMainWrapper = (props: SellerMainWrapperProps) => {
+const LayoutMainWrapper = (props: LayoutMainWrapperProps) => {
     return (
         <div className="flex flex-1 flex-col gap-6">
             <div className="flex items-center justify-between gap-4">
@@ -24,4 +24,4 @@ const SellerMainWrapper = (props: SellerMainWrapperProps) => {
         </div>
     )
 }
-export default SellerMainWrapper
+export default LayoutMainWrapper

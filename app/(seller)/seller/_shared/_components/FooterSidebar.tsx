@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useTheme } from "@wrksz/themes/client";
-import { ChevronsUpDown, LogOut, Moon, Sun, UserCircle } from "lucide-react";
+import { ChevronsUpDown, LogOut, Moon, UserCircle } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { SidebarFooter, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
@@ -10,15 +10,15 @@ import { Switch } from "@/components/ui/switch";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useLogout } from "@/app/(authentication)/_shared/_hooks/useLogout";
 import { useAuthStore } from "@/app/(authentication)/_shared/_store/authStore";
+import { toast } from "sonner";
 
-const SellerSidebarFooter = () => {
+const FooterSidebar = () => {
     const { isMobile } = useSidebar();
     const { resolvedTheme, setTheme } = useTheme();
+    const { mutate: logout, isPending } = useLogout();
     const email = useAuthStore((s) => s.user?.email) ?? "";
     const role = useAuthStore((s) => s.user?.role) ?? "";
     const isDark = resolvedTheme === "dark";
-
-    const { mutate: logout, isPending } = useLogout();
 
     return (
         <SidebarFooter>
@@ -53,12 +53,12 @@ const SellerSidebarFooter = () => {
                         </DropdownMenuTrigger>
 
                         <DropdownMenuContent
-                            side={isMobile ? "bottom" : "right"}
+                            side={isMobile ? "top" : "right"}
                             align="end"
                             sideOffset={12}
-                            className="min-w-60 rounded-xl p-1.5"
+                            className="min-w-60 rounded-xl p-2"
                         >
-                            <div className="flex items-center gap-3 rounded-lg bg-muted/50 p-2.5">
+                            <div className="flex items-center gap-3 rounded-lg bg-muted/50 p-2">
                                 <Avatar className="size-8 rounded-lg">
                                     <AvatarFallback className="rounded-lg bg-primary text-sm font-semibold text-primary-foreground">
                                         {email.charAt(0).toUpperCase()}
@@ -77,36 +77,22 @@ const SellerSidebarFooter = () => {
                                 </div>
                             </div>
 
-                            <DropdownMenuSeparator className="my-1.5" />
+                            <DropdownMenuSeparator className="my-2" />
 
-                            <DropdownMenuItem render={<Link href="/seller/profile" />} className="gap-2.5 py-2">
+                            <DropdownMenuItem className="gap-3 py-2" onClick={() => toast.info("Profile coming soon")}>
                                 <UserCircle className="text-muted-foreground" />
                                 Profile
                             </DropdownMenuItem>
 
-                            <DropdownMenuItem
-                                closeOnClick={false}
-                                onClick={() => setTheme(isDark ? "light" : "dark")}
-                                className="gap-2.5 py-2"
-                            >
+                            <DropdownMenuItem closeOnClick={false} onClick={() => setTheme(isDark ? "light" : "dark")} className="gap-3 py-2">
                                 <Moon className="text-muted-foreground" />
                                 <span className="flex-1">Dark mode</span>
-                                <Switch
-                                    checked={isDark}
-                                    tabIndex={-1}
-                                    className="pointer-events-none"
-                                    aria-label="Toggle dark mode"
-                                />
+                                <Switch checked={isDark} tabIndex={-1} className="pointer-events-none" aria-label="Toggle dark mode" />
                             </DropdownMenuItem>
 
-                            <DropdownMenuSeparator className="my-1.5" />
+                            <DropdownMenuSeparator className="my-2" />
 
-                            <DropdownMenuItem
-                                variant="destructive"
-                                disabled={isPending}
-                                onClick={() => logout()}
-                                className="gap-2.5 py-2"
-                            >
+                            <DropdownMenuItem variant="destructive" disabled={isPending} onClick={() => logout()} className="gap-3 py-2">
                                 <LogOut />
                                 {isPending ? "Logging out..." : "Log out"}
                             </DropdownMenuItem>
@@ -118,4 +104,4 @@ const SellerSidebarFooter = () => {
     );
 };
 
-export default SellerSidebarFooter;
+export default FooterSidebar;

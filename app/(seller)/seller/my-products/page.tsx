@@ -1,7 +1,7 @@
 
 export const instant = false;
 
-import SellerMainWrapper from "../_components/_layout/SellerMainWrapper";
+import SellerMainWrapper from "../_shared/_components/LayoutMainWrapper";
 import ProductListView from "../_components/_common/ProductListView";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
