@@ -11,10 +11,18 @@ interface EditProductViewProps {
 }
 
 const EditProductView = ({ id }: EditProductViewProps) => {
-    const { data: products, isLoading } = useSellerProducts();
+    const { data: products, isLoading, isError } = useSellerProducts();
     const product = products?.find((item) => item.id === id);
     if (isLoading) {
         return <Skeleton className="h-96 w-full rounded-xl" />;
+    }
+
+    if (isError) {
+        return (
+            <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed py-16 text-center">
+                <p className="font-medium text-destructive">Failed to load product</p>
+            </div>
+        );
     }
 
     if (!product) {

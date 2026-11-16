@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { renderHook, act } from "@testing-library/react";
+import { renderHook, act, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const mockPush = jest.fn();
@@ -94,7 +94,7 @@ describe("useAddProduct", () => {
 
         const result = await run(values);
 
-        expect(result.current.error).toEqual(new Error("Not authenticated"));
+        await waitFor(() => expect(result.current.error).toEqual(new Error("Not authenticated")));
         expect(mockedAdd).not.toHaveBeenCalled();
         expect(mockPush).not.toHaveBeenCalled();
     });

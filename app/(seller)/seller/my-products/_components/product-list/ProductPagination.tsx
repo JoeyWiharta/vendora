@@ -17,7 +17,10 @@ interface ProductPaginationProps {
 
 const ProductPagination = (props: ProductPaginationProps) => {
     const count = Math.min(props.maxPageButtons, props.totalPages);
-    const start = Math.min(Math.max(1, props.currentPage - 1), props.totalPages - count + 1);
+    const start = Math.min(
+        Math.max(1, props.currentPage - Math.floor(count / 2)),
+        props.totalPages - count + 1,
+    );
     const pages = Array.from({ length: count }, (_, i) => start + i);
     const isFirst = props.currentPage === 1;
     const isLast = props.currentPage === props.totalPages;
