@@ -9,7 +9,7 @@ jest.mock("next/navigation", () => ({
 }));
 jest.mock("sonner", () => ({ toast: { promise: jest.fn() } }));
 jest.mock("../../_shared/_services/authService", () => ({ registerUser: jest.fn() }));
-jest.mock("@/app/(seller)/seller/_constants/SellerSidebarMenu", () => ({
+jest.mock("@/app/(seller)/seller/_shared/_constants/sellerMenu", () => ({
     SELLER_HOME_PATH: "/seller/test-home",
 }));
 jest.mock("@/app/(customer)/customer/_constants/CustomerNavMenu", () => ({

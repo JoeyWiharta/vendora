@@ -5,7 +5,7 @@ const mockReplace = jest.fn();
 jest.mock("next/navigation", () => ({
     useRouter: () => ({ replace: mockReplace }),
 }));
-jest.mock("@/app/(seller)/seller/_constants/SellerSidebarMenu", () => ({
+jest.mock("@/app/(seller)/seller/_shared/_constants/sellerMenu", () => ({
     SELLER_HOME_PATH: "/seller/test-home",
 }));
 jest.mock("@/app/(customer)/customer/_constants/CustomerNavMenu", () => ({

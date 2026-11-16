@@ -20,10 +20,10 @@ import { PRODUCT_CATEGORIES } from "@/constants/ProductCategory"
 import { DEFAULT_PRODUCT_IMAGE } from "@/constants/ProductDefaultImage"
 import { cn } from "@/lib/utils"
 import { formatRupiah, formatFileSize, formatNumber } from "@/lib/formatter"
-import { MAX_IMAGE_MB, addEditProductSchema } from "../../_schema/productAddEditSchema"
-import { useAddProduct } from "../../_hooks/useAddProducts"
-import { useUpdateProduct } from "../../_hooks/useUpdateProduct"
-import type { AddProductFormPayload, Product } from "../../_types/productTypes"
+import { MAX_IMAGE_MB, addEditProductSchema } from "../_schema/productAddEditSchema"
+import { useAddProduct } from "../_hooks/useAddProducts"
+import { useUpdateProduct } from "../_hooks/useUpdateProduct"
+import type { AddProductFormPayload, Product } from "../_types/productTypes"
 
 const ProductForm = ({ product }: { product?: Product }) => {
     const isEdit = !!product

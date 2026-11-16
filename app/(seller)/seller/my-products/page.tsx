@@ -1,32 +1,26 @@
-
 export const instant = false;
 
-import SellerMainWrapper from "../_shared/_components/LayoutMainWrapper";
-import ProductListView from "../_components/_common/ProductListView";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import SellerMainWrapper from "../_shared/_components/LayoutMainWrapper";
+import ProductView from "./_components/product-list/ProductView";
 
-const MyProductsPage = () => {
+const SellerProductPage = () => {
     return (
         <SellerMainWrapper
             title="My Products"
             description="Manage the products you sell."
             action={
-                <Button
-                    size="lg"
-                    render={
-                        <Link href="/seller/my-products/add" />
-                    }
-                    nativeButton={false}>
+                <Button size="lg" nativeButton={false} render={<Link href="/seller/my-products/add" />}>
                     <Plus className="size-4" />
                     Add Product
                 </Button>
             }
         >
-            <ProductListView />
+            <ProductView />
         </SellerMainWrapper>
     );
 };
 
-export default MyProductsPage;
+export default SellerProductPage;

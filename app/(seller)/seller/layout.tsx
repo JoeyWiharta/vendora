@@ -18,7 +18,7 @@ export default function SellerLayout({ children }: { children: React.ReactNode }
 
                 <SidebarInset>
                     <LayoutHeader />
-                    <main className="flex-1 px-4 md:px-6">{children}</main>
+                    <main className="flex flex-1 flex-col px-4 md:px-6">{children}</main>
                     <LayoutFooter />
                 </SidebarInset>
             </SidebarProvider>

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useSellerProducts } from "../../_hooks/useSellerProducts";
+import { useSellerProducts } from "../_hooks/useSellerProducts";
 import ProductForm from "./ProductForm";
 
 interface EditProductViewProps {

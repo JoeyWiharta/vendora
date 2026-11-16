@@ -1,7 +1,7 @@
 export const instant = false;
 
 import SellerMainWrapper from "../../_shared/_components/LayoutMainWrapper"
-import ProductForm from "../../_components/_common/ProductForm"
+import ProductForm from "../_components/ProductForm"
 
 const AddProductPage = () => {
     return (
