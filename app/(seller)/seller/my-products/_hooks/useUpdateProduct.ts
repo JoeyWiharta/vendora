@@ -44,8 +44,8 @@ export const useUpdateProduct = () => {
 
             return promise;
         },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: SELLER_PRODUCTS_QUERY_KEY });
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({ queryKey: SELLER_PRODUCTS_QUERY_KEY });
             router.push("/seller/my-products");
         },
     });

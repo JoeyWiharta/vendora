@@ -50,8 +50,17 @@ const ProductForm = ({ product }: { product?: Product }) => {
     })
 
     useEffect(() => {
-        reset()
-    }, [reset])
+        const values = {
+            productName: product?.productName ?? "",
+            productCategory: product?.productCategory ?? "",
+            description: product?.description ?? "",
+            productPrice: product?.productPrice ?? NaN,
+            productStock: product?.productStock ?? NaN,
+            image: undefined,
+        }
+        reset(values)
+        return () => reset(values)
+    }, [reset, product])
 
     const [image, productName, productCategory, description, productPrice, productStock] = watch(["image", "productName", "productCategory", "description", "productPrice", "productStock"])
 
