@@ -1,4 +1,4 @@
-import CartView from "../_components/_common/CartView";
+import CartView from "./_components/CartView";
 
 export const instant = false;
 

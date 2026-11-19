@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
     agentFeedback: true,
     agentUpgrade: "security",
   },
+  allowedDevOrigins: ["192.168.61.50"],
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {
@@ -23,7 +24,7 @@ const nextConfig: NextConfig = {
         hostname: "res.cloudinary.com",
       }
     ]
-  }
+  },
 };
 
 export default nextConfig;
