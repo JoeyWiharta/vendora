@@ -8,6 +8,11 @@ import type { HomeProductTypes } from "../../_types/homeProductTypes";
 
 const LOW_STOCK_THRESHOLD = 10;
 
+const PERKS = [
+    { icon: Truck, label: "Fast delivery" },
+    { icon: Shield, label: "Secure payment" },
+] as const;
+
 type ProductOverviewProps = {
     product: HomeProductTypes;
     children: React.ReactNode; // slot untuk PurchasePanel
@@ -19,23 +24,23 @@ const ProductOverview = ({ product, children }: ProductOverviewProps) => {
 
     return (
         <div className="grid items-start gap-6 lg:grid-cols-2 lg:gap-10">
-            {/* Foto */}
-            <div className="relative aspect-square w-full overflow-hidden rounded-3xl border bg-muted lg:sticky lg:top-24">
-                <Image
-                    src={productImage || DEFAULT_PRODUCT_IMAGE}
-                    alt={productName}
-                    fill
-                    priority
-                    sizes="(min-width: 1024px) 50vw, 100vw"
-                    className="object-cover"
-                />
-                <Badge variant="secondary" className="absolute left-3 top-3 bg-background/90 backdrop-blur">
-                    {productCategory}
-                </Badge>
+            <div className="lg:sticky lg:top-24">
+                <div className="relative aspect-square w-full overflow-hidden rounded-3xl border bg-muted lg:aspect-auto lg:h-[calc(100dvh-14rem)] lg:min-h-95 lg:max-h-130">
+                    <Image
+                        src={productImage || DEFAULT_PRODUCT_IMAGE}
+                        alt={productName}
+                        fill
+                        priority
+                        sizes="(min-width: 1024px) 50vw, 100vw"
+                        className="object-cover"
+                    />
+                    <Badge variant="secondary" className="absolute left-3 top-3 bg-background/90 backdrop-blur">
+                        {productCategory}
+                    </Badge>
+                </div>
             </div>
 
-            {/* Info */}
-            <div className="grid min-w-0 gap-6">
+            <div className="grid min-w-0 gap-3 lg:gap-4">
                 <div className="grid gap-3">
                     <h1 className="text-2xl font-bold leading-snug tracking-tight md:text-3xl">{productName}</h1>
                     <p className="text-3xl font-bold text-primary md:text-4xl">{formatRupiah(productPrice)}</p>
@@ -63,15 +68,18 @@ const ProductOverview = ({ product, children }: ProductOverviewProps) => {
 
                 {children}
 
-                <div className="grid grid-cols-2 gap-3 text-xs text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                        <Truck className="size-4 text-primary" />
-                        Fast delivery
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Shield className="size-4 text-primary" />
-                        Secure payment
-                    </div>
+                <div className="grid grid-cols-2 gap-3">
+                    {PERKS.map(({ icon: Icon, label }) => (
+                        <div
+                            key={label}
+                            className="flex items-center gap-2 rounded-xl border bg-muted/30 px-3 py-2"
+                        >
+                            <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                                <Icon className="size-3.5" />
+                            </span>
+                            <span className="text-xs font-medium">{label}</span>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>

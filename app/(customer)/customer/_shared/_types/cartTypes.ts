@@ -1,7 +1,7 @@
-import type { CustomerProduct } from "./productTypes";
+import { HomeProductTypes } from "../../home/_types/homeProductTypes";
 
 export interface CartItem {
     productId: string;
     quantity: number;
-    product: CustomerProduct | null; // null kalau produk sudah dihapus seller
+    product: HomeProductTypes | null; // null kalau produk sudah dihapus seller
 }

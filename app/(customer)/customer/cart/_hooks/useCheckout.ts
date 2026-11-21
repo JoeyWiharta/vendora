@@ -20,7 +20,7 @@ export const useCheckout = () => {
             queryClient.invalidateQueries({ queryKey: HOME_PRODUCTS_QUERY_KEY });
             queryClient.invalidateQueries({ queryKey: ["customer-product"] });
             queryClient.invalidateQueries({ queryKey: ["customer-orders"] });
-            router.push("/customer/orders");
+            router.push("/customer/order-history");
         },
         onError: (e: Error) => {
             toast.error(e.message || "Purchase failed");

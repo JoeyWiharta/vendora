@@ -37,7 +37,7 @@ const HomeView = () => {
                         title="Recommended for you"
                         subtitle={`${recommended.length} random picks, just for you`}
                     >
-                        <ProductGrid products={recommended} />
+                        <ProductGrid products={recommended} prioritizeFirst />
                     </HomeSection>
 
                     <HomeSection

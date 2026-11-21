@@ -38,7 +38,7 @@ const PurchasePanel = ({ product }: { product: HomeProductTypes }) => {
 
     return (
         <Card className="gap-0 rounded-2xl bg-muted/30 py-0 shadow-none">
-            <CardContent className="grid gap-4 p-4 md:p-5">
+            <CardContent className="grid gap-3 p-4 lg:p-4">
                 {stock <= 0 ? (
                     <p className="rounded-lg bg-destructive/10 p-3 text-center text-sm font-medium text-destructive">
                         This product is out of stock

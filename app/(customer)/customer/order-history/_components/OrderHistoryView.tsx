@@ -4,9 +4,9 @@ import Link from "next/link";
 import { History, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { CUSTOMER_HOME_PATH } from "../../_shared/_constants/CustomerNavMenu";
 import { useOrders } from "../_hooks/useOrders";
 import OrderCard from "./OrderCard";
-import { CUSTOMER_HOME_PATH } from "../../_shared/_constants/CustomerNavMenu";
 
 const OrderHistoryView = () => {
     const { data: orders = [], isLoading, isError, error, refetch, isFetching } = useOrders();
@@ -15,7 +15,7 @@ const OrderHistoryView = () => {
         return (
             <div className="grid gap-4">
                 {Array.from({ length: 2 }).map((_, i) => (
-                    <Skeleton key={i} className="h-56 w-full rounded-2xl" />
+                    <Skeleton key={i} className="h-48 w-full rounded-2xl" />
                 ))}
             </div>
         );
@@ -23,7 +23,7 @@ const OrderHistoryView = () => {
 
     if (isError) {
         return (
-            <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed bg-card py-16 text-center">
+            <div className="flex flex-1 flex-col items-center justify-center gap-3 rounded-2xl border border-dashed bg-card py-16 text-center">
                 <p className="font-medium text-destructive">Failed to load orders</p>
                 <p className="max-w-md text-sm text-muted-foreground">{error.message}</p>
                 <Button variant="outline" size="sm" onClick={() => refetch()} disabled={isFetching}>
@@ -36,7 +36,7 @@ const OrderHistoryView = () => {
 
     if (!orders.length) {
         return (
-            <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed bg-card py-16 text-center">
+            <div className="flex flex-1 flex-col items-center justify-center gap-3 rounded-2xl border border-dashed bg-card py-16 text-center">
                 <History className="size-10 text-muted-foreground" />
                 <p className="font-medium">No orders yet</p>
                 <Button size="sm" nativeButton={false} render={<Link href={CUSTOMER_HOME_PATH} />}>

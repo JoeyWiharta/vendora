@@ -3,10 +3,21 @@ import { Skeleton } from "@/components/ui/skeleton";
 import ProductCard from "./ProductCard";
 import type { HomeProductTypes } from "../_types/homeProductTypes";
 
-export const ProductGrid = ({ products }: { products: HomeProductTypes[] }) => (
+const PRIORITY_COUNT = 5;
+
+type ProductGridProps = {
+    products: HomeProductTypes[];
+    prioritizeFirst?: boolean;
+};
+
+export const ProductGrid = ({ products, prioritizeFirst = false }: ProductGridProps) => (
     <div className="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-5">
-        {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+        {products.map((product, index) => (
+            <ProductCard
+                key={product.id}
+                product={product}
+                priority={prioritizeFirst && index < PRIORITY_COUNT}
+            />
         ))}
     </div>
 );

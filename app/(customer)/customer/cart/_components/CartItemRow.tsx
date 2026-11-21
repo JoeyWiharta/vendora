@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AlertTriangle, Minus, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { DEFAULT_PRODUCT_IMAGE } from "@/constants/ProductDefaultImage";
 import { formatRupiah } from "@/lib/formatter";
 import { cn } from "@/lib/utils";
@@ -11,7 +12,13 @@ import { useRemoveCartItem, useUpdateCartQuantity } from "../_hooks/useCart";
 import type { CartItem } from "../../_shared/_types/cartTypes";
 import { isInsufficient, lineTotal } from "../_utils/cartUtils";
 
-const CartItemRow = ({ item }: { item: CartItem }) => {
+type CartItemRowProps = {
+    item: CartItem;
+    selected: boolean;
+    onToggle: () => void;
+};
+
+const CartItemRow = ({ item, selected, onToggle }: CartItemRowProps) => {
     const { mutate: updateQty, isPending: isUpdating } = useUpdateCartQuantity();
     const { mutate: remove, isPending: isRemoving } = useRemoveCartItem();
     const busy = isUpdating || isRemoving;
@@ -19,21 +26,28 @@ const CartItemRow = ({ item }: { item: CartItem }) => {
     const { product, productId, quantity } = item;
     const insufficient = isInsufficient(item);
     const canIncrease = !!product && quantity + 1 <= product.productStock;
-    const href = `/customer/product/${productId}`;
+    const href = `/customer/home/${productId}`;
 
     return (
         <div
             className={cn(
-                "flex gap-3 rounded-2xl border bg-card p-3 sm:gap-4 sm:p-4",
+                "flex items-center gap-3 rounded-2xl border bg-card p-3 transition-colors sm:gap-4 sm:p-4",
+                selected && "border-primary/50 bg-primary/5",
                 insufficient && "border-destructive bg-destructive/5",
             )}
         >
-            {/* Gambar: link ke detail (kalau produk masih ada) */}
+            <Checkbox
+                checked={selected}
+                disabled={insufficient || busy}
+                onCheckedChange={onToggle}
+                aria-label={product ? `Select ${product.productName}` : "Select item"}
+            />
+
             {product ? (
                 <Link
                     href={href}
                     aria-label={`View ${product.productName}`}
-                    className="group relative size-20 shrink-0 overflow-hidden rounded-lg border bg-muted sm:size-24"
+                    className="group relative size-20 shrink-0 overflow-hidden rounded-xl border bg-muted sm:size-24"
                 >
                     <Image
                         src={product.productImage || DEFAULT_PRODUCT_IMAGE}
@@ -44,7 +58,7 @@ const CartItemRow = ({ item }: { item: CartItem }) => {
                     />
                 </Link>
             ) : (
-                <div className="relative size-20 shrink-0 overflow-hidden rounded-lg border bg-muted sm:size-24">
+                <div className="relative size-20 shrink-0 overflow-hidden rounded-xl border bg-muted sm:size-24">
                     <Image
                         src={DEFAULT_PRODUCT_IMAGE}
                         alt="Unavailable product"
@@ -55,12 +69,12 @@ const CartItemRow = ({ item }: { item: CartItem }) => {
                 </div>
             )}
 
-            <div className="flex min-w-0 flex-1 flex-col justify-between gap-2">
+            <div className="flex min-w-0 flex-1 flex-col justify-between gap-3 sm:min-h-24">
                 <div className="min-w-0">
                     {product ? (
                         <Link
                             href={href}
-                            className="line-clamp-2 text-sm font-medium transition hover:text-primary hover:underline"
+                            className="line-clamp-2 text-sm font-medium transition hover:text-primary hover:underline sm:text-base"
                         >
                             {product.productName}
                         </Link>

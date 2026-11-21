@@ -8,9 +8,15 @@ import type { HomeProductTypes } from "../_types/homeProductTypes";
 
 const LOW_STOCK_THRESHOLD = 10;
 
-const ProductCard = ({ product }: { product: HomeProductTypes }) => {
+type ProductCardProps = {
+    product: HomeProductTypes;
+    priority?: boolean;
+};
+
+const ProductCard = ({ product, priority = false }: ProductCardProps) => {
     const { id, productName, productCategory, productImage, productPrice, productStock } = product;
-    const isLowStock = productStock <= LOW_STOCK_THRESHOLD;
+    const isOutOfStock = productStock <= 0;
+    const isLowStock = productStock > 0 && productStock <= LOW_STOCK_THRESHOLD;
 
     return (
         <Link
@@ -24,6 +30,7 @@ const ProductCard = ({ product }: { product: HomeProductTypes }) => {
                             src={productImage}
                             alt={productName}
                             fill
+                            priority={priority}
                             sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, 50vw"
                             className="object-cover transition duration-300 group-hover:scale-105"
                         />
@@ -38,11 +45,15 @@ const ProductCard = ({ product }: { product: HomeProductTypes }) => {
                         {productCategory}
                     </Badge>
 
-                    {isLowStock && (
+                    {isOutOfStock ? (
+                        <Badge variant="destructive" className="absolute bottom-2 left-2">
+                            Out of stock
+                        </Badge>
+                    ) : isLowStock ? (
                         <Badge variant="destructive" className="absolute bottom-2 left-2">
                             Only {productStock} left
                         </Badge>
-                    )}
+                    ) : null}
                 </div>
 
                 <CardContent className="grid gap-1.5 p-3">

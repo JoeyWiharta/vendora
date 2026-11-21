@@ -8,7 +8,7 @@ jest.mock("next/navigation", () => ({
 jest.mock("@/app/(seller)/seller/_shared/_constants/sellerMenu", () => ({
     SELLER_HOME_PATH: "/seller/test-home",
 }));
-jest.mock("@/app/(customer)/customer/_constants/CustomerNavMenu", () => ({
+jest.mock("@/app/(customer)/customer/_shared/_constants/CustomerNavMenu", () => ({
     CUSTOMER_HOME_PATH: "/customer/test-home",
 }));
 
