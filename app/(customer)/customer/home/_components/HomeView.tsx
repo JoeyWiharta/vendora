@@ -46,7 +46,7 @@ const HomeView = () => {
                         title="All products"
                         subtitle={`${shuffled.length} products available`}
                     >
-                        <ProductGrid products={shuffled} />
+                        <ProductGrid products={shuffled} prioritizeFirst/>
                     </HomeSection>
                 </>
             )}

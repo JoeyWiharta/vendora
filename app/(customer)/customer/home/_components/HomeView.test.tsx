@@ -114,13 +114,10 @@ describe("HomeView", () => {
         expect(within(all).getByTestId("grid")).toHaveAttribute("data-count", "5");
     });
 
-    it("hanya grid recommended yang memakai prioritizeFirst", () => {
+    it("kedua grid memakai prioritizeFirst agar gambar LCP tidak lazy", () => {
         render(<HomeView />);
 
         expect(within(screen.getByTestId("recommended")).getByTestId("grid")).toHaveAttribute("data-priority", "true");
-        expect(within(screen.getByTestId("all-products")).getByTestId("grid")).toHaveAttribute(
-            "data-priority",
-            "false",
-        );
+        expect(within(screen.getByTestId("all-products")).getByTestId("grid")).toHaveAttribute("data-priority", "true");
     });
 });
