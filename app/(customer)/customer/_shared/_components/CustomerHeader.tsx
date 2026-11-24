@@ -122,7 +122,7 @@ const CustomerHeader = () => {
                                     onClick={() => logout()}
                                     className="gap-2.5 py-2.5 md:py-2"
                                 >
-                                    <LogOut />
+                                    <LogOut  />
                                     {isPending ? "Logging out..." : "Log out"}
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
